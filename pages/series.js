@@ -107,7 +107,6 @@ export default function Series({
         setSeriesInfo(seriesInfo);
       }
     });
-    console.log(getSeriesInfo);
   };
 
   useEffect(() => {
@@ -166,7 +165,7 @@ export default function Series({
         {/* Series Seasons and Episodes */}
         <div
           className="series-wrapper"
-          style={loaded || loading ? { display: "none" } : { width: "100%" }}
+          style={loading ? { display: "none" } : { width: "100%" }}
         >
           <div className="series-left">
             <h4>Seasons</h4>
@@ -175,7 +174,10 @@ export default function Series({
                 const splitDate = serie.air_date?.split("-");
 
                 const seasonNum = i === 0 ? i + 1 : i;
-                if (serie.name !== "Specials") {
+                if (
+                  serie.name !== "Specials" &&
+                  i <= series.last_episode_to_air.season_number
+                ) {
                   return (
                     <Link
                       href={{

@@ -83,7 +83,6 @@ export default function Home({ movies, series }) {
           {movies.map((movie) => {
             // Get first part of date
             const splitDate = movie.release_date.split("-");
-
             return (
               <Link
                 href={{

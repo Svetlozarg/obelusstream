@@ -7,6 +7,41 @@ import { getSeries } from "../utils/series";
 import { getMovie } from "../utils/movie";
 
 export default function Search({ search, query }) {
+  // State to hold series info
+  const [getSeriesInfo, setSeriesInfo] = useState([]);
+
+  const handleSeries = () => {
+    const seriesID = [];
+    const moviesID = [];
+    search.results.map((id) => {
+      if (id.media_type === "movie") {
+        moviesID.push(id.id);
+      } else if (id.media_type === "tv") {
+        seriesID.push(id.id);
+      }
+    });
+
+    const resultArr = [];
+    seriesID.map(async (serieResult, i) => {
+      resultArr.push(await getSeries(serieResult));
+
+      if (i === seriesID.length - 1) {
+        setSeriesInfo(resultArr);
+      }
+    });
+    moviesID.map(async (movieResult, i) => {
+      resultArr.push(await getMovie(movieResult));
+
+      if (i === moviesID.length - 1) {
+        setSeriesInfo((oldMovies) => [...oldMovies, ...moviesID]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    handleSeries();
+  }, [query]);
+
   // Check if there is a search query
   if (search.length !== 0 || query.length !== 0) {
     return (
@@ -29,16 +64,14 @@ export default function Search({ search, query }) {
 
         <div className="search-wrapper">
           {/* Iterate over search results */}
-          {search.results.map((result) => {
+          {getSeriesInfo.map((result) => {
             // If Movie
             if (
-              result.media_type === "movie" &&
               result.poster_path &&
               result.title &&
               result.vote_average &&
               result.release_date &&
-              result.overview &&
-              result.genre_ids.length !== 0
+              result.overview
             ) {
               const splitDate = result.release_date.split("-");
               return (
@@ -56,10 +89,7 @@ export default function Search({ search, query }) {
                       title={result.original_title}
                       year={splitDate[0]}
                       vote={result.vote_average.toFixed(1)}
-                      tag={
-                        result.media_type.charAt(0).toUpperCase() +
-                        result.media_type.slice(1)
-                      }
+                      tag="Movie"
                       img={
                         "https://image.tmdb.org/t/p/original/" +
                         result.poster_path
@@ -70,15 +100,17 @@ export default function Search({ search, query }) {
               );
               // If tv
             } else if (
-              result.media_type === "tv" &&
               result.poster_path &&
-              result.genre_ids.length !== 0 &&
               result.original_name &&
               result.origin_country &&
               result.overview &&
               result.vote_average &&
               result.origin_country.length !== 0
             ) {
+              // Get first part of date
+              const splitDate = result?.last_air_date?.split("-");
+              const splitDateFirst = result?.first_air_date?.split("-");
+
               return (
                 <Link
                   href={{
@@ -92,9 +124,13 @@ export default function Search({ search, query }) {
                     <MovieCard
                       id={result.id}
                       title={result.original_name}
-                      year={result.origin_country[0]}
+                      year={
+                        splitDate !== undefined
+                          ? splitDate[0]
+                          : splitDateFirst[0]
+                      }
                       vote={result.vote_average.toFixed(1)}
-                      tag={result.media_type.toUpperCase()}
+                      tag="TV"
                       seasons={result.last_episode_to_air?.season_number}
                       episodes={result.last_episode_to_air?.episode_number}
                       img={
