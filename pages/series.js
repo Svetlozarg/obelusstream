@@ -43,6 +43,8 @@ export default function Series({
   const [open, setOpen] = useState(false);
   // State for favourite
   const [favourite, setFavourite] = useState(false);
+  // State to hold series info
+  const [getSeriesInfo, setSeriesInfo] = useState([]);
 
   // Open/Close trailer popup
   const handleOpen = () => {
@@ -96,7 +98,20 @@ export default function Series({
     }
   };
 
+  const handleSeries = () => {
+    const seriesInfo = [];
+    related.results.map(async (serie, i) => {
+      const serieInfo = await getSeries(serie.id);
+      seriesInfo.push(serieInfo);
+      if (i === related.results.length - 1) {
+        setSeriesInfo(seriesInfo);
+      }
+    });
+    console.log(getSeriesInfo);
+  };
+
   useEffect(() => {
+    handleSeries();
     setTimeout(() => {
       setLoading(false);
       if (document.getElementById("movieIframe").contentWindow.length === 0) {
@@ -485,15 +500,18 @@ export default function Series({
           style={loading ? { display: "none" } : { width: "100%" }}
         >
           {/* Iterate over related movies */}
-          {related.results.map((relatedMovie) => {
+          {getSeriesInfo.map((relatedMovie) => {
             if (
               relatedMovie.poster_path &&
-              relatedMovie.genre_ids.length !== 0 &&
               relatedMovie.original_name &&
               relatedMovie.origin_country &&
               relatedMovie.overview &&
               relatedMovie.vote_average
             ) {
+              // Get first part of date
+              const splitDate = relatedMovie?.last_air_date?.split("-");
+              const splitDateFirst = relatedMovie?.first_air_date?.split("-");
+
               return (
                 <Link
                   href={{
@@ -506,9 +524,17 @@ export default function Series({
                   <a>
                     <MovieCard
                       title={relatedMovie.name}
-                      year={relatedMovie.origin_country[0]}
+                      year={
+                        splitDate !== undefined
+                          ? splitDate[0]
+                          : splitDateFirst[0]
+                      }
                       vote={relatedMovie.vote_average.toFixed(1)}
                       tag="TV"
+                      seasons={relatedMovie.last_episode_to_air?.season_number}
+                      episodes={
+                        relatedMovie.last_episode_to_air?.episode_number
+                      }
                       img={
                         "https://image.tmdb.org/t/p/original/" +
                         relatedMovie.poster_path

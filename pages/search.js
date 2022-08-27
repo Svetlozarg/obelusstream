@@ -2,6 +2,9 @@ import Link from "next/link";
 import { getSearch } from "../utils/search";
 
 import MovieCard from "../components/MovieCard";
+import { useState, useEffect } from "react";
+import { getSeries } from "../utils/series";
+import { getMovie } from "../utils/movie";
 
 export default function Search({ search, query }) {
   // Check if there is a search query
@@ -92,6 +95,8 @@ export default function Search({ search, query }) {
                       year={result.origin_country[0]}
                       vote={result.vote_average.toFixed(1)}
                       tag={result.media_type.toUpperCase()}
+                      seasons={result.last_episode_to_air?.season_number}
+                      episodes={result.last_episode_to_air?.episode_number}
                       img={
                         "https://image.tmdb.org/t/p/original/" +
                         result.poster_path

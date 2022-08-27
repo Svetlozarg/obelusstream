@@ -20,10 +20,12 @@ import { UserAuth } from "../context/AuthContext";
 
 export default function MovieCard({
   id,
-  title = "",
-  year = "",
-  vote = "",
-  tag = "",
+  title = "No Title",
+  year = 0,
+  vote = 0,
+  tag = "No Tag",
+  seasons = 0,
+  episodes = 0,
   img,
 }) {
   const { user } = UserAuth();
@@ -89,6 +91,13 @@ export default function MovieCard({
       <div className="moviecard-img">
         {/* Movie Image */}
         <Image src={img} alt="Movie Image" width={170} height={240} />
+
+        {tag === "TV" && (
+          <div className="season-info-count">
+            <p>S{seasons}</p>
+            <p>E{episodes}</p>
+          </div>
+        )}
 
         {/* If Favourite */}
         {favourite && user && (

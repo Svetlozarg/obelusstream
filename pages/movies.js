@@ -83,8 +83,8 @@ export default function Movies({ movies }) {
         })}
 
         {/* Iterate over movies array */}
-        {!loading &&
-          getMovies.map((movie) => {
+        {getMovies.map((movie, i) => {
+          if (i < getMovies.length - 10) {
             if (
               movie.poster_path &&
               movie.title &&
@@ -121,6 +121,51 @@ export default function Movies({ movies }) {
                   </a>
                 </Link>
               );
+            }
+          }
+        })}
+
+        {/* Iterate over movies array */}
+        {!loading &&
+          getMovies.map((movie, i) => {
+            if (i >= getMovies.length - 10) {
+              if (
+                movie.poster_path &&
+                movie.title &&
+                movie.vote_average &&
+                movie.release_date &&
+                movie.overview &&
+                movie.genre_ids.length !== 0
+              ) {
+                // Get first part of date
+                const splitDate = movie.release_date.split("-");
+
+                return (
+                  <Link
+                    href={{
+                      pathname: "/movie",
+                      query: { id: movie.id },
+                    }}
+                    key={movie.id}
+                    passHref={true}
+                    style={loading ? { display: "none" } : { display: "block" }}
+                  >
+                    <a>
+                      <MovieCard
+                        id={movie.id}
+                        title={movie.original_title}
+                        year={splitDate[0]}
+                        vote={movie.vote_average.toFixed(1)}
+                        tag="Movie"
+                        img={
+                          "https://image.tmdb.org/t/p/original/" +
+                          movie.poster_path
+                        }
+                      />
+                    </a>
+                  </Link>
+                );
+              }
             }
           })}
       </div>

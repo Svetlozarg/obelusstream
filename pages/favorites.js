@@ -218,6 +218,10 @@ export default function Favorites() {
           >
             {/* Iterate over favourite series */}
             {series.map((serie) => {
+              // Get first part of date
+              const splitDate = serie?.last_air_date?.split("-");
+              const splitDateFirst = serie?.first_air_date?.split("-");
+
               return (
                 <Link
                   href={{
@@ -231,9 +235,15 @@ export default function Favorites() {
                     <MovieCard
                       id={serie.id}
                       title={serie.name}
-                      year={serie.origin_country[0]}
+                      year={
+                        splitDate !== undefined
+                          ? splitDate[0]
+                          : splitDateFirst[0]
+                      }
                       vote={serie.vote_average.toFixed(1)}
                       tag="TV"
+                      seasons={serie.last_episode_to_air?.season_number}
+                      episodes={serie.last_episode_to_air?.episode_number}
                       img={
                         "https://image.tmdb.org/t/p/original/" +
                         serie.poster_path

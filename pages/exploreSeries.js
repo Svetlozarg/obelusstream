@@ -4,6 +4,7 @@ import { exploreSeries } from "../utils/exploreSeries";
 import MovieCard from "../components/MovieCard";
 import { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { getSeries } from "../utils/series";
 
 export default function Series({ series }) {
   // State for storing series
@@ -12,18 +13,20 @@ export default function Series({ series }) {
   const [getPage, setPage] = useState(2);
   // State for loading
   const [loading, setLoading] = useState(false);
+  // State to hold series info
+  const [getSeriesInfo, setSeriesInfo] = useState([]);
 
   // Fetch next page and add to array
   const loadMoreMovies = async () => {
     setLoading(true);
 
     // Fetch next page
-    let movies = await exploreSeries(getPage);
+    let series = await exploreSeries(getPage);
 
     // Loop and push to the array
-    movies.results.forEach((movie) => {
+    series.results.forEach(async (movie) => {
       const newMovies = [];
-      newMovies.push(movie);
+      newMovies.push(await getSeries(movie.id));
       setMovies((oldMovies) => [...oldMovies, ...newMovies]);
     });
 
@@ -35,8 +38,25 @@ export default function Series({ series }) {
     }, 500);
   };
 
+  const handleSeries = () => {
+    const seriesID = [];
+    series.results.map((id) => {
+      seriesID.push(id.id);
+    });
+
+    const seriesInfo = [];
+    seriesID.map(async (serie, i) => {
+      seriesInfo.push(await getSeries(serie));
+
+      if (i === seriesID.length - 1) {
+        setSeriesInfo(seriesInfo);
+      }
+    });
+  };
+
   useEffect(() => {
     loadMoreMovies();
+    handleSeries();
   }, []);
 
   return (
@@ -44,15 +64,18 @@ export default function Series({ series }) {
       <h2>Explore Popular Series</h2>
       <div className="movies-wrapper">
         {/* Iterate over first page of series */}
-        {series.results.map((serie) => {
+        {getSeriesInfo.map((serie) => {
           if (
             serie.poster_path &&
-            serie.genre_ids.length !== 0 &&
             serie.original_name &&
             serie.origin_country &&
             serie.overview &&
             serie.vote_average
           ) {
+            // Get first part of date
+            const splitDate = serie?.last_air_date?.split("-");
+            const splitDateFirst = serie?.first_air_date?.split("-");
+
             return (
               <Link
                 href={{
@@ -66,9 +89,13 @@ export default function Series({ series }) {
                   <MovieCard
                     id={serie.id}
                     title={serie.name}
-                    year={serie.origin_country[0]}
+                    year={
+                      splitDate !== undefined ? splitDate[0] : splitDateFirst[0]
+                    }
                     vote={serie.vote_average.toFixed(1)}
                     tag="TV"
+                    seasons={serie.last_episode_to_air?.season_number}
+                    episodes={serie.last_episode_to_air?.episode_number}
                     img={
                       "https://image.tmdb.org/t/p/original/" + serie.poster_path
                     }
@@ -80,16 +107,19 @@ export default function Series({ series }) {
         })}
 
         {/* Iterate over series array */}
-        {!loading &&
-          getMovies.map((serie) => {
+        {getMovies.map((serie, i) => {
+          if (i < getMovies.length - 10) {
             if (
               serie.poster_path &&
-              serie.genre_ids.length !== 0 &&
               serie.original_name &&
               serie.origin_country &&
               serie.overview &&
               serie.vote_average
             ) {
+              // Get first part of date
+              const splitDate = serie?.last_air_date?.split("-");
+              const splitDateFirst = serie?.first_air_date?.split("-");
+
               return (
                 <Link
                   href={{
@@ -103,9 +133,15 @@ export default function Series({ series }) {
                     <MovieCard
                       id={serie.id}
                       title={serie.name}
-                      year={serie.origin_country[0]}
+                      year={
+                        splitDate !== undefined
+                          ? splitDate[0]
+                          : splitDateFirst[0]
+                      }
                       vote={serie.vote_average.toFixed(1)}
                       tag="TV"
+                      seasons={serie.last_episode_to_air?.season_number}
+                      episodes={serie.last_episode_to_air?.episode_number}
                       img={
                         "https://image.tmdb.org/t/p/original/" +
                         serie.poster_path
@@ -114,6 +150,56 @@ export default function Series({ series }) {
                   </a>
                 </Link>
               );
+            }
+          }
+        })}
+
+        {/* Iterate over series array */}
+        {!loading &&
+          getMovies.map((serie, i) => {
+            if (i >= getMovies.length - 10) {
+              if (
+                serie.poster_path &&
+                serie.original_name &&
+                serie.origin_country &&
+                serie.overview &&
+                serie.vote_average
+              ) {
+                // Get first part of date
+                const splitDate = serie?.last_air_date?.split("-");
+                const splitDateFirst = serie?.first_air_date?.split("-");
+
+                return (
+                  <Link
+                    href={{
+                      pathname: "/series",
+                      query: { id: serie.id, season: "1", episode: "1" },
+                    }}
+                    key={serie.id}
+                    passHref={true}
+                  >
+                    <a>
+                      <MovieCard
+                        id={serie.id}
+                        title={serie.name}
+                        year={
+                          splitDate !== undefined
+                            ? splitDate[0]
+                            : splitDateFirst[0]
+                        }
+                        vote={serie.vote_average.toFixed(1)}
+                        tag="TV"
+                        seasons={serie.last_episode_to_air?.season_number}
+                        episodes={serie.last_episode_to_air?.episode_number}
+                        img={
+                          "https://image.tmdb.org/t/p/original/" +
+                          serie.poster_path
+                        }
+                      />
+                    </a>
+                  </Link>
+                );
+              }
             }
           })}
       </div>
