@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-export default function iFrame({ id = "", season = "", episode = "" }) {
+export default function IFrame({ id = "", season = "", episode = "" }) {
   // State for iframe loaded
   const [loaded, setLoaded] = useState(false);
   // State for loading
