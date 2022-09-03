@@ -598,6 +598,10 @@ footer .arrow-up {
   color: #E94560;
 }
 
+.single-movie .movie-info .movie-right span>.cont {
+  color: #fff
+}
+
 .single-movie .movie-info .movie-right .movie-rate {
   color: #ffa600;
 }
@@ -963,18 +967,41 @@ footer .arrow-up {
 /* Cast Members */
 .cast-members {
   width: 100%;
-  max-width: 1780px;
   height: auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, max-content));
-  grid-gap: 16px;
-  justify-content: center;
+  display: flex;
   margin: 0 auto;
+  padding-bottom: 2rem;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 .cast-members .cast-member-card {
-  width: 150px;
+  width: 180px;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .cast-members .cast-member-card img {
@@ -1011,6 +1038,7 @@ footer .arrow-up {
   font-size: 2rem;
   background-color: #2b3035;
   margin-bottom: 3rem;
+
   display: flex;
   justify-content: center;
   align-items: center;
