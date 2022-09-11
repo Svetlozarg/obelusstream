@@ -1,18 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import Router, { useRouter } from "next/router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef, useState } from 'react';
+import Router, { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSearch,
   faHamburger,
   faX,
   faUser,
   faSignOut,
-} from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-import Image from "next/image";
+} from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
+import Image from 'next/image';
 
-import logo from "../assets/logo.png";
-import { UserAuth } from "../context/AuthContext";
+import logo from '../assets/logo.png';
+import { UserAuth } from '../context/AuthContext';
 
 export default function MovieCard() {
   const router = useRouter();
@@ -20,14 +20,14 @@ export default function MovieCard() {
   // State for mobile menu
   const [active, setActive] = useState(false);
   // State for active page
-  const [activePage, setActivePage] = useState("");
+  const [activePage, setActivePage] = useState('');
   // Ref for search query
-  const query = useRef("");
+  const query = useRef('');
 
   const handleSignOut = async () => {
     try {
       await logOut();
-      router.push("/login");
+      router.push('/login');
     } catch (error) {
       console.log(error);
     }
@@ -39,95 +39,95 @@ export default function MovieCard() {
   // On enter trigger search
   const onKeyPress = (e) => {
     if (e.which == 13) {
-      Router.push("/search/?query=" + query.current.value);
+      Router.push('/search/?query=' + query.current.value);
     }
   };
 
   // Handle active page
   const handleActiveLink = () => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       if (
-        document.getElementById("/").getAttribute("href") ===
+        document.getElementById('/').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/");
+        setActivePage('/');
       } else if (
-        document.getElementById("/movies").getAttribute("href") ===
+        document.getElementById('/movies').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/movies");
+        setActivePage('/movies');
       } else if (
-        document.getElementById("/exploreSeries").getAttribute("href") ===
+        document.getElementById('/exploreSeries').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/exploreSeries");
+        setActivePage('/exploreSeries');
       } else {
-        setActivePage("");
+        setActivePage('');
       }
     }
   };
 
   useEffect(() => {
     // Set active page on load
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       if (
-        document.getElementById("/").getAttribute("href") ===
+        document.getElementById('/').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/");
+        setActivePage('/');
       } else if (
-        document.getElementById("/movies").getAttribute("href") ===
+        document.getElementById('/movies').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/movies");
+        setActivePage('/movies');
       } else if (
-        document.getElementById("/exploreSeries").getAttribute("href") ===
+        document.getElementById('/exploreSeries').getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/exploreSeries");
+        setActivePage('/exploreSeries');
       } else if (
-        document.getElementById("/favorites")?.getAttribute("href") ===
+        document.getElementById('/favorites')?.getAttribute('href') ===
         window.location.pathname
       ) {
-        setActivePage("/favorites");
+        setActivePage('/favorites');
       } else {
-        setActivePage("");
+        setActivePage('');
       }
     }
   }, [handleActiveLink]);
 
   return (
     // Header
-    <header id="header">
+    <header id='header'>
       {/* Logo */}
       <Link
         href={{
-          pathname: "/",
+          pathname: '/',
         }}
         passHref={true}
       >
         <a>
-          <Image src={logo} alt="" width={350} height={150} />
+          <Image src={logo} alt='' width={350} height={150} />
         </a>
       </Link>
 
-      <nav className={active ? "nav-menu-mobile active" : "nav-menu"}>
+      <nav className={active ? 'nav-menu-mobile active' : 'nav-menu'}>
         {/* Mobile Menu */}
         {active && (
           <ul>
             <li onClick={toggle}>
               <Link
                 href={{
-                  pathname: "/",
+                  pathname: '/',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/"
+                  id='/'
                   style={
-                    activePage === "/"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                   onClick={handleActiveLink}
                 >
@@ -138,16 +138,16 @@ export default function MovieCard() {
             <li onClick={toggle}>
               <Link
                 href={{
-                  pathname: "/movies",
+                  pathname: '/movies',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/movies"
+                  id='/movies'
                   style={
-                    activePage === "/movies"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/movies'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                   onClick={handleActiveLink}
                 >
@@ -158,16 +158,16 @@ export default function MovieCard() {
             <li onClick={toggle}>
               <Link
                 href={{
-                  pathname: "/exploreSeries",
+                  pathname: '/exploreSeries',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/exploreSeries"
+                  id='/exploreSeries'
                   style={
-                    activePage === "/exploreSeries"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/exploreSeries'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                   onClick={handleActiveLink}
                 >
@@ -179,16 +179,16 @@ export default function MovieCard() {
               <li onClick={toggle}>
                 <Link
                   href={{
-                    pathname: "/favorites",
+                    pathname: '/favorites',
                   }}
                   passHref={true}
                 >
                   <a
-                    id="/favorites"
+                    id='/favorites'
                     style={
-                      activePage === "/favorites"
-                        ? { borderBottom: "2px solid #fff" }
-                        : { fontSize: "1.2rem" }
+                      activePage === '/favorites'
+                        ? { borderBottom: '2px solid #fff' }
+                        : { fontSize: '1.2rem' }
                     }
                     onClick={handleActiveLink}
                   >
@@ -206,54 +206,435 @@ export default function MovieCard() {
             <li onClick={handleActiveLink}>
               <Link
                 href={{
-                  pathname: "/",
+                  pathname: '/',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/"
+                  id='/'
                   style={
-                    activePage === "/"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                 >
                   Home
                 </a>
               </Link>
             </li>
-            <li onClick={handleActiveLink}>
+            <li onClick={handleActiveLink} className='second-child'>
               <Link
                 href={{
-                  pathname: "/movies",
+                  pathname: '/movies',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/movies"
+                  id='/movies'
                   style={
-                    activePage === "/movies"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/movies'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                 >
                   Movies
                 </a>
               </Link>
+              <ul className='dropdown'>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/movies',
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      All
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 28 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Action
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 12 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Adventure
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 16 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Animation
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 35 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Comedy
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 80 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Crime
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 99 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Documentary
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 18 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Drama
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 10751 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Family
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 14 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Fantasy
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 36 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      History
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 27 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Horror
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 10402 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Music
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 9648 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Mystery
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 10749 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Romance
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 878 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Science Fiction
+                    </a>
+                  </Link>{' '}
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 53 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/thriller'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Thriller
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 10752 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/war'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      War
+                    </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={{
+                      pathname: '/genres',
+                      query: { id: 37 },
+                    }}
+                    passHref={true}
+                  >
+                    <a
+                      id='/movies'
+                      style={
+                        activePage === '/movies'
+                          ? { borderBottom: '2px solid #fff' }
+                          : { fontSize: '1rem' }
+                      }
+                    >
+                      Western
+                    </a>
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li onClick={handleActiveLink}>
               <Link
                 href={{
-                  pathname: "/exploreSeries",
+                  pathname: '/exploreSeries',
                 }}
                 passHref={true}
               >
                 <a
-                  id="/exploreSeries"
+                  id='/exploreSeries'
                   style={
-                    activePage === "/exploreSeries"
-                      ? { borderBottom: "2px solid #fff" }
-                      : { fontSize: "1.2rem" }
+                    activePage === '/exploreSeries'
+                      ? { borderBottom: '2px solid #fff' }
+                      : { fontSize: '1.2rem' }
                   }
                 >
                   Series
@@ -264,16 +645,16 @@ export default function MovieCard() {
               <li onClick={handleActiveLink}>
                 <Link
                   href={{
-                    pathname: "/favorites",
+                    pathname: '/favorites',
                   }}
                   passHref={true}
                 >
                   <a
-                    id="/favorites"
+                    id='/favorites'
                     style={
-                      activePage === "/favorites"
-                        ? { borderBottom: "2px solid #fff" }
-                        : { fontSize: "1.2rem" }
+                      activePage === '/favorites'
+                        ? { borderBottom: '2px solid #fff' }
+                        : { fontSize: '1.2rem' }
                     }
                   >
                     Favorites
@@ -285,21 +666,21 @@ export default function MovieCard() {
         )}
       </nav>
 
-      <div className="header-right-div">
+      <div className='header-right-div'>
         {/* Search */}
-        <div id="searchUsers" className="instant-search">
-          <div className="instant-search__input-container">
+        <div id='searchUsers' className='instant-search'>
+          <div className='instant-search__input-container'>
             <input
-              className="instant-search__input"
-              type="text"
-              spellCheck="false"
-              placeholder="Search..."
+              className='instant-search__input'
+              type='text'
+              spellCheck='false'
+              placeholder='Search...'
               ref={query}
               onKeyPress={onKeyPress}
             />
             <FontAwesomeIcon
               icon={faSearch}
-              style={{ color: "#000", width: "25px", marginRight: "10px" }}
+              style={{ color: '#000', width: '25px', marginRight: '10px' }}
             ></FontAwesomeIcon>
           </div>
         </div>
@@ -307,23 +688,23 @@ export default function MovieCard() {
         {user ? (
           <FontAwesomeIcon
             icon={faSignOut}
-            style={{ color: "#fff", width: "25px", cursor: "pointer" }}
-            size="lg"
-            name="Logout"
+            style={{ color: '#fff', width: '25px', cursor: 'pointer' }}
+            size='lg'
+            name='Logout'
             onClick={handleSignOut}
           ></FontAwesomeIcon>
         ) : (
           <Link
             href={{
-              pathname: "/login",
+              pathname: '/login',
             }}
             passHref={true}
           >
             <a>
               <FontAwesomeIcon
                 icon={faUser}
-                style={{ color: "#fff", width: "25px" }}
-                size="lg"
+                style={{ color: '#fff', width: '25px' }}
+                size='lg'
               ></FontAwesomeIcon>
             </a>
           </Link>
@@ -332,9 +713,9 @@ export default function MovieCard() {
         {/* Hamburger Icon */}
         {!active && (
           <FontAwesomeIcon
-            className="hamburger"
+            className='hamburger'
             icon={faHamburger}
-            style={{ color: "#fff", width: "25px", marginRight: "20px" }}
+            style={{ color: '#fff', width: '25px', marginRight: '20px' }}
             onClick={toggle}
           ></FontAwesomeIcon>
         )}
@@ -342,9 +723,9 @@ export default function MovieCard() {
         {/* X Icon */}
         {active && (
           <FontAwesomeIcon
-            className="hamburger"
+            className='hamburger'
             icon={faX}
-            style={{ color: "#fff", width: "25px", marginRight: "20px" }}
+            style={{ color: '#fff', width: '25px', marginRight: '20px' }}
             onClick={toggle}
           ></FontAwesomeIcon>
         )}
