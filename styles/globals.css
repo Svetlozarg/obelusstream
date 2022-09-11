@@ -917,6 +917,14 @@ footer .arrow-up {
   font-size: 2rem;
 }
 
+.movies .movies-box {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 443px) {
   .movies h2 {
     text-align: center;
@@ -1195,4 +1203,13 @@ footer .arrow-up {
   border: 3px solid #000;
   background-color: transparent;
   color: #fff;
+}
+
+.genres .loading-box {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
 }

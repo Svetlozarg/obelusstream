@@ -1,134 +1,75 @@
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { fetchMovies } from '../utils/movies';
+import MovieCard from '../components/MovieCard';
+import ClipLoader from 'react-spinners/ClipLoader';
 
-import { fetchMovies } from "../utils/movies";
-import MovieCard from "../components/MovieCard";
-import { useEffect, useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
-
-export default function Movies({ movies }) {
-  // State for storing series
+export default function Movies() {
   const [getMovies, setMovies] = useState([]);
-  // State for page
-  const [getPage, setPage] = useState(2);
-  // State for loading
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // Fetch next page and add to array
-  const loadMoreMovies = async () => {
+  // Fetch first 2 pages on load
+  const handleFetchMovies = async () => {
     setLoading(true);
 
-    // Fetch next page
-    let movies = await fetchMovies(getPage);
+    setMovies([]);
+    setPage([]);
 
-    // Loop and push to the array
-    movies.results.forEach((movie) => {
-      const newMovies = [];
-      newMovies.push(movie);
-      setMovies((oldMovies) => [...oldMovies, ...newMovies]);
+    const pageOne = await fetchMovies(1);
+    const pageTwo = await fetchMovies(2);
+
+    setPage(3);
+
+    const moviesArr = [];
+    pageOne.results.map((item) => {
+      moviesArr.push(item);
     });
-
-    // Current page + 1
-    setPage(getPage + 1);
+    pageTwo.results.map((item) => {
+      moviesArr.push(item);
+    });
+    setMovies(moviesArr);
 
     setTimeout(() => {
       setLoading(false);
     }, 500);
   };
 
+  // Fetch next page
+  const loadMore = async () => {
+    setPage(page + 1);
+
+    const moviesData = await fetchMovies(page);
+
+    const moviesArr = [];
+    moviesData.results.map((item) => {
+      moviesArr.push(item);
+    });
+
+    setMovies((oldMovies) => [...oldMovies, ...moviesArr]);
+  };
+
   useEffect(() => {
-    loadMoreMovies();
+    handleFetchMovies();
   }, []);
 
   return (
-    <div className="movies">
+    <div className='movies'>
       <h2>Explore Popular Movies</h2>
-      <div className="movies-wrapper">
-        {/* Iterate over movies */}
-        {movies.results.map((movie) => {
-          if (
-            movie.poster_path &&
-            movie.title &&
-            movie.vote_average &&
-            movie.release_date &&
-            movie.overview &&
-            movie.genre_ids.length !== 0
-          ) {
-            // Get first part of date
-            const splitDate = movie.release_date.split("-");
 
-            return (
-              <Link
-                href={{
-                  pathname: "/movie",
-                  query: { id: movie.id },
-                }}
-                key={movie.id}
-                passHref={true}
-              >
-                <a>
-                  <MovieCard
-                    id={movie.id}
-                    title={movie.original_title}
-                    year={splitDate[0]}
-                    vote={movie.vote_average.toFixed(1)}
-                    tag="Movie"
-                    img={
-                      "https://image.tmdb.org/t/p/original/" + movie.poster_path
-                    }
-                  />
-                </a>
-              </Link>
-            );
-          }
-        })}
+      <div
+        className='movies-box'
+        style={loading ? { display: 'flex' } : { display: 'none' }}
+      >
+        <ClipLoader color={'#123abv'} loading={loading} size={80} />
+      </div>
 
-        {/* Iterate over movies array */}
-        {getMovies.map((movie, i) => {
-          if (i < getMovies.length - 10) {
-            if (
-              movie.poster_path &&
-              movie.title &&
-              movie.vote_average &&
-              movie.release_date &&
-              movie.overview &&
-              movie.genre_ids.length !== 0
-            ) {
+      {!loading && (
+        <div className='movies-wrapper'>
+          {/* Iterate over movies */}
+          {getMovies.length !== 0 &&
+            getMovies.map((movie, i) => {
               // Get first part of date
-              const splitDate = movie.release_date.split("-");
-
-              return (
-                <Link
-                  href={{
-                    pathname: "/movie",
-                    query: { id: movie.id },
-                  }}
-                  key={movie.id}
-                  passHref={true}
-                  style={loading ? { display: "none" } : { display: "block" }}
-                >
-                  <a>
-                    <MovieCard
-                      id={movie.id}
-                      title={movie.original_title}
-                      year={splitDate[0]}
-                      vote={movie.vote_average.toFixed(1)}
-                      tag="Movie"
-                      img={
-                        "https://image.tmdb.org/t/p/original/" +
-                        movie.poster_path
-                      }
-                    />
-                  </a>
-                </Link>
-              );
-            }
-          }
-        })}
-
-        {/* Iterate over movies array */}
-        {!loading &&
-          getMovies.map((movie, i) => {
-            if (i >= getMovies.length - 10) {
               if (
                 movie.poster_path &&
                 movie.title &&
@@ -137,18 +78,15 @@ export default function Movies({ movies }) {
                 movie.overview &&
                 movie.genre_ids.length !== 0
               ) {
-                // Get first part of date
-                const splitDate = movie.release_date.split("-");
-
+                const splitDate = movie.release_date.split('-');
                 return (
                   <Link
                     href={{
-                      pathname: "/movie",
+                      pathname: '/movie',
                       query: { id: movie.id },
                     }}
-                    key={movie.id}
+                    key={i}
                     passHref={true}
-                    style={loading ? { display: "none" } : { display: "block" }}
                   >
                     <a>
                       <MovieCard
@@ -156,9 +94,9 @@ export default function Movies({ movies }) {
                         title={movie.original_title}
                         year={splitDate[0]}
                         vote={movie.vote_average.toFixed(1)}
-                        tag="Movie"
+                        tag='Movie'
                         img={
-                          "https://image.tmdb.org/t/p/original/" +
+                          'https://image.tmdb.org/t/p/original/' +
                           movie.poster_path
                         }
                       />
@@ -166,32 +104,16 @@ export default function Movies({ movies }) {
                   </Link>
                 );
               }
-            }
-          })}
-      </div>
+            })}
+        </div>
+      )}
 
       {/* Loading Icon */}
-      <div className="movies-div">
-        {loading ? (
-          <ClipLoader color={"#123abv"} loading={loading} size={80} />
-        ) : (
-          <button className="loadmore-btn" onClick={loadMoreMovies}>
-            More Movies
-          </button>
-        )}
+      <div className='movies-div'>
+        <button className='loadmore-btn' onClick={loadMore}>
+          More Movies
+        </button>
       </div>
     </div>
   );
-}
-
-// Get Static Props
-export async function getServerSideProps() {
-  // Fetch First Page Of Movies
-  let movies = await fetchMovies(1);
-
-  return {
-    props: {
-      movies: movies,
-    },
-  };
 }
