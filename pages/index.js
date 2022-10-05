@@ -1,25 +1,25 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { getSeries } from "../utils/series";
+import Head from 'next/head';
+import Link from 'next/link';
+import Router from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { getSeries } from '../utils/series';
 
-import MovieCard from "../components/MovieCard";
+import MovieCard from '../components/MovieCard';
 
-import { getTrendingMovies, getTrendingSeries } from "../utils/trending";
+import { getTrendingMovies, getTrendingSeries } from '../utils/trending';
 
 export default function Home({ movies, series }) {
   // State to hold series info
   const [getSeriesInfo, setSeriesInfo] = useState([]);
   // Ref for search
-  const query = useRef("");
+  const query = useRef('');
 
   // On enter search
   const onKeyPress = (e) => {
     if (e.which == 13) {
-      Router.push("/search/?query=" + query.current.value);
+      Router.push('/search/?query=' + query.current.value);
     }
   };
 
@@ -67,7 +67,7 @@ export default function Home({ movies, series }) {
                 />
                 <FontAwesomeIcon
                   icon={faSearch}
-                  style={{ color: "#000", width: "25px", marginRight: "16px" }}
+                  style={{ color: '#000', width: '25px', marginRight: '16px' }}
                 ></FontAwesomeIcon>
               </div>
             </div>
@@ -82,11 +82,11 @@ export default function Home({ movies, series }) {
           {/* Iterate over trending movies */}
           {movies.map((movie) => {
             // Get first part of date
-            const splitDate = movie.release_date.split("-");
+            const splitDate = movie.release_date.split('-');
             return (
               <Link
                 href={{
-                  pathname: "/movie",
+                  pathname: '/movie',
                   query: { id: movie.id },
                 }}
                 key={movie.id}
@@ -103,7 +103,7 @@ export default function Home({ movies, series }) {
                       movie.media_type.slice(1)
                     }
                     img={
-                      "https://image.tmdb.org/t/p/original/" + movie.poster_path
+                      'https://image.tmdb.org/t/p/original/' + movie.poster_path
                     }
                   />
                 </a>
@@ -125,14 +125,14 @@ export default function Home({ movies, series }) {
               serie.last_episode_to_air?.episode_number !== 0
             ) {
               // Get first part of date
-              const splitDate = serie?.last_air_date?.split("-");
-              const splitDateFirst = serie?.first_air_date?.split("-");
+              const splitDate = serie?.last_air_date?.split('-');
+              const splitDateFirst = serie?.first_air_date?.split('-');
 
               return (
                 <Link
                   href={{
-                    pathname: "/series",
-                    query: { id: serie.id, season: "1", episode: "1" },
+                    pathname: '/series',
+                    query: { id: serie.id, season: '1', episode: '1' },
                   }}
                   key={serie.id}
                   passHref={true}
@@ -151,7 +151,7 @@ export default function Home({ movies, series }) {
                       seasons={serie.last_episode_to_air?.season_number}
                       episodes={serie.last_episode_to_air?.episode_number}
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         serie.poster_path
                       }
                     />
@@ -167,7 +167,7 @@ export default function Home({ movies, series }) {
 }
 
 // Get Static Props
-export async function getStaticProps() {
+export async function getServerSideProps() {
   // Fetch Trending Movies
   const trendingMovies = await getTrendingMovies();
 
