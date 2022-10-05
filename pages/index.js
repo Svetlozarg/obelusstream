@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { getSeries } from '../utils/series';
+import { getMovie } from '../utils/movie';
 
 import MovieCard from '../components/MovieCard';
 
@@ -13,6 +14,7 @@ import { getTrendingMovies, getTrendingSeries } from '../utils/trending';
 export default function Home({ movies, series }) {
   // State to hold series info
   const [getSeriesInfo, setSeriesInfo] = useState([]);
+  const [getMoviesInfo, setMoviesInfo] = useState([]);
   // Ref for search
   const query = useRef('');
 
@@ -23,7 +25,7 @@ export default function Home({ movies, series }) {
     }
   };
 
-  const handleSeries = () => {
+  const handleSeriesMovies = () => {
     const seriesInfo = [];
     series.map(async (serie, i) => {
       const serieInfo = await getSeries(serie.id);
@@ -32,10 +34,21 @@ export default function Home({ movies, series }) {
         setSeriesInfo(seriesInfo);
       }
     });
+
+    const moviesInfo = [];
+    movies.map(async (movie, i) => {
+      const movieInfo = await getMovie(movie.id);
+      moviesInfo.push(movieInfo);
+      if (i === movies.length - 1) {
+        setMoviesInfo(moviesInfo);
+      }
+    });
+
+    console.log(getMoviesInfo);
   };
 
   useEffect(() => {
-    handleSeries();
+    handleSeriesMovies();
   }, []);
 
   return (
@@ -80,7 +93,7 @@ export default function Home({ movies, series }) {
         <h2>Trending Movies</h2>
         <div className="trending-wrapper">
           {/* Iterate over trending movies */}
-          {movies.map((movie) => {
+          {getMoviesInfo.map((movie) => {
             // Get first part of date
             const splitDate = movie.release_date.split('-');
             return (
@@ -96,12 +109,13 @@ export default function Home({ movies, series }) {
                   <MovieCard
                     id={movie.id}
                     title={movie.original_title}
+                    description={movie.overview}
                     year={splitDate[0]}
                     vote={movie.vote_average.toFixed(1)}
-                    tag={
-                      movie.media_type.charAt(0).toUpperCase() +
-                      movie.media_type.slice(1)
-                    }
+                    tag="Movie"
+                    runtime={movie.runtime}
+                    country={movie.production_countries[0].name}
+                    genre={movie.genres}
                     img={
                       'https://image.tmdb.org/t/p/original/' + movie.poster_path
                     }
@@ -127,7 +141,6 @@ export default function Home({ movies, series }) {
               // Get first part of date
               const splitDate = serie?.last_air_date?.split('-');
               const splitDateFirst = serie?.first_air_date?.split('-');
-
               return (
                 <Link
                   href={{
@@ -147,9 +160,13 @@ export default function Home({ movies, series }) {
                           : splitDateFirst[0]
                       }
                       vote={serie.vote_average.toFixed(1)}
+                      description={serie.overview}
                       tag="TV"
+                      runtime={serie.episode_run_time[0]}
+                      country={serie.origin_country[0]}
                       seasons={serie.last_episode_to_air?.season_number}
                       episodes={serie.last_episode_to_air?.episode_number}
+                      genre={serie.genres}
                       img={
                         'https://image.tmdb.org/t/p/original/' +
                         serie.poster_path

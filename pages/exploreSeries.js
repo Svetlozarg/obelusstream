@@ -1,10 +1,10 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import { exploreSeries } from "../utils/exploreSeries";
-import MovieCard from "../components/MovieCard";
-import { useEffect, useState } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
-import { getSeries } from "../utils/series";
+import { exploreSeries } from '../utils/exploreSeries';
+import MovieCard from '../components/MovieCard';
+import { useEffect, useState } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { getSeries } from '../utils/series';
 
 export default function Series({ series }) {
   // State for storing series
@@ -73,14 +73,14 @@ export default function Series({ series }) {
             serie.vote_average
           ) {
             // Get first part of date
-            const splitDate = serie?.last_air_date?.split("-");
-            const splitDateFirst = serie?.first_air_date?.split("-");
+            const splitDate = serie?.last_air_date?.split('-');
+            const splitDateFirst = serie?.first_air_date?.split('-');
 
             return (
               <Link
                 href={{
-                  pathname: "/series",
-                  query: { id: serie.id, season: "1", episode: "1" },
+                  pathname: '/series',
+                  query: { id: serie.id, season: '1', episode: '1' },
                 }}
                 key={serie.id}
                 passHref={true}
@@ -96,8 +96,12 @@ export default function Series({ series }) {
                     tag="TV"
                     seasons={serie.last_episode_to_air?.season_number}
                     episodes={serie.last_episode_to_air?.episode_number}
+                    description={serie.overview}
+                    runtime={serie.episode_run_time[0]}
+                    country={serie.origin_country[0]}
+                    genre={serie.genres}
                     img={
-                      "https://image.tmdb.org/t/p/original/" + serie.poster_path
+                      'https://image.tmdb.org/t/p/original/' + serie.poster_path
                     }
                   />
                 </a>
@@ -117,14 +121,14 @@ export default function Series({ series }) {
               serie.vote_average
             ) {
               // Get first part of date
-              const splitDate = serie?.last_air_date?.split("-");
-              const splitDateFirst = serie?.first_air_date?.split("-");
+              const splitDate = serie?.last_air_date?.split('-');
+              const splitDateFirst = serie?.first_air_date?.split('-');
 
               return (
                 <Link
                   href={{
-                    pathname: "/series",
-                    query: { id: serie.id, season: "1", episode: "1" },
+                    pathname: '/series',
+                    query: { id: serie.id, season: '1', episode: '1' },
                   }}
                   key={serie.id}
                   passHref={true}
@@ -142,8 +146,12 @@ export default function Series({ series }) {
                       tag="TV"
                       seasons={serie.last_episode_to_air?.season_number}
                       episodes={serie.last_episode_to_air?.episode_number}
+                      description={serie.overview}
+                      runtime={serie.episode_run_time[0]}
+                      country={serie.origin_country[0]}
+                      genre={serie.genres}
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         serie.poster_path
                       }
                     />
@@ -166,14 +174,14 @@ export default function Series({ series }) {
                 serie.vote_average
               ) {
                 // Get first part of date
-                const splitDate = serie?.last_air_date?.split("-");
-                const splitDateFirst = serie?.first_air_date?.split("-");
+                const splitDate = serie?.last_air_date?.split('-');
+                const splitDateFirst = serie?.first_air_date?.split('-');
 
                 return (
                   <Link
                     href={{
-                      pathname: "/series",
-                      query: { id: serie.id, season: "1", episode: "1" },
+                      pathname: '/series',
+                      query: { id: serie.id, season: '1', episode: '1' },
                     }}
                     key={serie.id}
                     passHref={true}
@@ -191,8 +199,12 @@ export default function Series({ series }) {
                         tag="TV"
                         seasons={serie.last_episode_to_air?.season_number}
                         episodes={serie.last_episode_to_air?.episode_number}
+                        description={serie.overview}
+                        runtime={serie.episode_run_time[0]}
+                        country={serie.origin_country[0]}
+                        genre={serie.genres}
                         img={
-                          "https://image.tmdb.org/t/p/original/" +
+                          'https://image.tmdb.org/t/p/original/' +
                           serie.poster_path
                         }
                       />
@@ -207,7 +219,7 @@ export default function Series({ series }) {
       {/* Loading Icon */}
       <div className="movies-div">
         {loading ? (
-          <ClipLoader color={"#123abv"} loading={loading} size={80} />
+          <ClipLoader color={'#123abv'} loading={loading} size={80} />
         ) : (
           <button className="loadmore-btn" onClick={loadMoreMovies}>
             More Movies

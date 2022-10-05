@@ -54,8 +54,6 @@ export default function IFrame({ id = '', season = '', episode = '' }) {
             : 'https://vidsrc.me/embed/' + id
         }
         frameBorder="0"
-        loading="lazy"
-        sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation"
         allowFullScreen
       ></iframe>
     </div>

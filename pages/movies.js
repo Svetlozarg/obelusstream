@@ -54,18 +54,18 @@ export default function Movies() {
   }, []);
 
   return (
-    <div className='movies'>
+    <div className="movies">
       <h2>Explore Popular Movies</h2>
 
       <div
-        className='movies-box'
+        className="movies-box"
         style={loading ? { display: 'flex' } : { display: 'none' }}
       >
         <ClipLoader color={'#123abv'} loading={loading} size={80} />
       </div>
 
       {!loading && (
-        <div className='movies-wrapper'>
+        <div className="movies-wrapper">
           {/* Iterate over movies */}
           {getMovies.length !== 0 &&
             getMovies.map((movie, i) => {
@@ -94,7 +94,10 @@ export default function Movies() {
                         title={movie.original_title}
                         year={splitDate[0]}
                         vote={movie.vote_average.toFixed(1)}
-                        tag='Movie'
+                        tag="Movie"
+                        description={movie.overview}
+                        runtime={movie.runtime}
+                        country={movie.original_language}
                         img={
                           'https://image.tmdb.org/t/p/original/' +
                           movie.poster_path
@@ -109,8 +112,8 @@ export default function Movies() {
       )}
 
       {/* Loading Icon */}
-      <div className='movies-div'>
-        <button className='loadmore-btn' onClick={loadMore}>
+      <div className="movies-div">
+        <button className="loadmore-btn" onClick={loadMore}>
           More Movies
         </button>
       </div>

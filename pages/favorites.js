@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import { getMovie } from "../utils/movie";
-import Link from "next/link";
-import MovieCard from "../components/MovieCard";
-import ClipLoader from "react-spinners/ClipLoader";
-import { getSeries } from "../utils/series";
-import { UserAuth } from "../context/AuthContext";
-import { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import { getMovie } from '../utils/movie';
+import Link from 'next/link';
+import MovieCard from '../components/MovieCard';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { getSeries } from '../utils/series';
+import { UserAuth } from '../context/AuthContext';
+import { useRouter } from 'next/router';
 import {
   setDoc,
   doc,
   deleteDoc,
   getDocs,
   collection,
-} from "firebase/firestore";
-import { db } from "../config/firebase";
+} from 'firebase/firestore';
+import { db } from '../config/firebase';
 
 export default function Favorites() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function Favorites() {
       });
 
       movieIdArr.forEach(async (movie) => {
-        if (movie.tag === "movie") {
+        if (movie.tag === 'movie') {
           moviesArr.push(await getMovie(movie.id));
           setMovies(moviesArr);
         }
@@ -65,7 +65,7 @@ export default function Favorites() {
         seriesIdArr.push(doc.data());
       });
       seriesIdArr.forEach(async (serie) => {
-        if (serie.tag === "tv") {
+        if (serie.tag === 'tv') {
           seriesArr.push(await getSeries(serie.id));
           setSeries(seriesArr);
         }
@@ -92,7 +92,7 @@ export default function Favorites() {
     if (user !== undefined) {
       fetchData();
     } else {
-      router.push("/login");
+      router.push('/login');
     }
   }, [user?.displayName]);
 
@@ -100,13 +100,13 @@ export default function Favorites() {
     <div className="favourites">
       <div className="favourites-tabs">
         <h2
-          className={toggleTab === 1 ? "active" : ""}
+          className={toggleTab === 1 ? 'active' : ''}
           onClick={() => handleToggleTab(1)}
         >
           Favourite Movies
         </h2>
         <h2
-          className={toggleTab === 2 ? "active" : ""}
+          className={toggleTab === 2 ? 'active' : ''}
           onClick={() => handleToggleTab(2)}
         >
           Favourite Series
@@ -116,22 +116,22 @@ export default function Favorites() {
       {/* Movies Tab */}
       <div
         className="favourites-main-wrapper"
-        style={toggleTab === 1 ? { display: "block" } : { display: "none" }}
+        style={toggleTab === 1 ? { display: 'block' } : { display: 'none' }}
       >
         {/* Loading Icon */}
         {loading ? (
           <div
             style={{
-              height: "40vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: '40vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <ClipLoader color={"#123abv"} loading={loading} size={80} />
+            <ClipLoader color={'#123abv'} loading={loading} size={80} />
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {/* No movies */}
@@ -144,18 +144,18 @@ export default function Favorites() {
           <div
             className={
               movies.length < 10
-                ? "favourites-wrapper .start"
-                : "favourites-wrapper .center"
+                ? 'favourites-wrapper .start'
+                : 'favourites-wrapper .center'
             }
           >
             {/* Iterate over favourite movies */}
             {movies.map((movie) => {
               // Get first part of date
-              const splitDate = movie.release_date.split("-");
+              const splitDate = movie.release_date.split('-');
               return (
                 <Link
                   href={{
-                    pathname: "/movie",
+                    pathname: '/movie',
                     query: { id: movie.id },
                   }}
                   key={movie.id}
@@ -168,8 +168,12 @@ export default function Favorites() {
                       year={splitDate[0]}
                       vote={movie.vote_average.toFixed(1)}
                       tag="Movie"
+                      description={movie.overview}
+                      runtime={movie.runtime}
+                      country={movie.original_language}
+                      genre={movie.genres}
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         movie.poster_path
                       }
                     />
@@ -184,22 +188,22 @@ export default function Favorites() {
       {/* Series Tab */}
       <div
         className="favourites-main-wrapper"
-        style={toggleTab === 2 ? { display: "block" } : { display: "none" }}
+        style={toggleTab === 2 ? { display: 'block' } : { display: 'none' }}
       >
         {/* Loading Icon */}
         {loading ? (
           <div
             style={{
-              height: "40vh",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              height: '40vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            <ClipLoader color={"#123abv"} loading={loading} size={80} />
+            <ClipLoader color={'#123abv'} loading={loading} size={80} />
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {/* No series */}
@@ -212,21 +216,21 @@ export default function Favorites() {
           <div
             className={
               series.length < 10
-                ? "favourites-wrapper .start"
-                : "favourites-wrapper .center"
+                ? 'favourites-wrapper .start'
+                : 'favourites-wrapper .center'
             }
           >
             {/* Iterate over favourite series */}
             {series.map((serie) => {
               // Get first part of date
-              const splitDate = serie?.last_air_date?.split("-");
-              const splitDateFirst = serie?.first_air_date?.split("-");
+              const splitDate = serie?.last_air_date?.split('-');
+              const splitDateFirst = serie?.first_air_date?.split('-');
 
               return (
                 <Link
                   href={{
-                    pathname: "/series",
-                    query: { id: serie.id, season: "1", episode: "1" },
+                    pathname: '/series',
+                    query: { id: serie.id, season: '1', episode: '1' },
                   }}
                   key={serie.id}
                   passHref={true}
@@ -244,8 +248,12 @@ export default function Favorites() {
                       tag="TV"
                       seasons={serie.last_episode_to_air?.season_number}
                       episodes={serie.last_episode_to_air?.episode_number}
+                      description={serie.overview}
+                      runtime={serie.episode_run_time[0]}
+                      country={serie.origin_country[0]}
+                      genre={serie.genres}
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         serie.poster_path
                       }
                     />

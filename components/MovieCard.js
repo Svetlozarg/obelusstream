@@ -1,36 +1,42 @@
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faStar,
   faHeartCirclePlus,
   faHeartCircleMinus,
   faPlay,
-} from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+} from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   setDoc,
   doc,
   deleteDoc,
   getDocs,
   collection,
-} from "firebase/firestore";
-import { db } from "../config/firebase";
-import { UserAuth } from "../context/AuthContext";
+} from 'firebase/firestore';
+import { db } from '../config/firebase';
+import { UserAuth } from '../context/AuthContext';
+import MovieInfoBox from './MovieInfoBox';
 
 export default function MovieCard({
   id,
-  title = "No Title",
+  title = 'No Title',
   year = 0,
   vote = 0,
-  tag = "No Tag",
+  tag = 'No Tag',
+  description,
   seasons = 0,
   episodes = 0,
   img,
+  runtime,
+  country,
+  genre,
 }) {
   const { user } = UserAuth();
   // State for favourite
   const [favourite, setFavourite] = useState(false);
+  const [openMovieBox, setOpenMovieBox] = useState(false);
 
   const router = useRouter();
 
@@ -38,16 +44,16 @@ export default function MovieCard({
   const addFavourite = async (e) => {
     e.preventDefault();
 
-    if (tag === "Movie") {
+    if (tag === 'Movie') {
       await setDoc(doc(db, user.displayName, title), {
         id: id,
-        tag: "movie",
+        tag: 'movie',
       });
       setFavourite(true);
-    } else if (tag === "TV") {
+    } else if (tag === 'TV') {
       await setDoc(doc(db, user.displayName, title), {
         id: id,
-        tag: "tv",
+        tag: 'tv',
       });
       setFavourite(true);
     }
@@ -57,7 +63,7 @@ export default function MovieCard({
   const removeFavourite = async (e) => {
     e.preventDefault();
 
-    if (tag === "Movie") {
+    if (tag === 'Movie') {
       await deleteDoc(doc(db, user.displayName, title));
       setFavourite(false);
     } else {
@@ -83,16 +89,24 @@ export default function MovieCard({
     if (user !== undefined) {
       handleFavourite();
     }
-  }, [user?.displayName]);
+  }, [user]);
 
   return (
     // Movie Card
-    <div className="moviecard" title={title}>
+    <div
+      className="moviecard"
+      onMouseEnter={() => {
+        setOpenMovieBox(true);
+      }}
+      onMouseLeave={() => {
+        setOpenMovieBox(false);
+      }}
+    >
       <div className="moviecard-img">
         {/* Movie Image */}
         <Image src={img} alt="Movie Image" width={170} height={240} />
 
-        {tag === "TV" && (
+        {tag === 'TV' && (
           <div className="season-info-count">
             <p>S{seasons}</p>
             <p>E{episodes}</p>
@@ -104,8 +118,8 @@ export default function MovieCard({
           <FontAwesomeIcon
             icon={faHeartCircleMinus}
             style={{
-              color: "#E94560",
-              width: "30px",
+              color: '#E94560',
+              width: '30px',
             }}
             size="2xl"
             className="heart-icon"
@@ -119,8 +133,8 @@ export default function MovieCard({
           <FontAwesomeIcon
             icon={faHeartCirclePlus}
             style={{
-              color: "#fff",
-              width: "30px",
+              color: '#fff',
+              width: '30px',
             }}
             size="2xl"
             className="heart-icon"
@@ -133,8 +147,8 @@ export default function MovieCard({
         <FontAwesomeIcon
           icon={faPlay}
           style={{
-            color: "#fff",
-            width: "30px",
+            color: '#fff',
+            width: '30px',
           }}
           size="2xl"
           className="play-icon"
@@ -152,9 +166,9 @@ export default function MovieCard({
             <FontAwesomeIcon
               icon={faStar}
               style={{
-                color: "rgb(199, 199, 199)",
-                width: "15px",
-                marginRight: "5px",
+                color: 'rgb(199, 199, 199)',
+                width: '15px',
+                marginRight: '5px',
               }}
             ></FontAwesomeIcon>
             {vote}
@@ -163,6 +177,19 @@ export default function MovieCard({
           <p>{tag}</p>
         </div>
       </div>
+
+      {openMovieBox && (
+        <MovieInfoBox
+          title={title}
+          vote={vote}
+          year={year}
+          description={description}
+          quality="HD"
+          runtime={runtime}
+          country={country}
+          genre={genre}
+        />
+      )}
     </div>
   );
 }
