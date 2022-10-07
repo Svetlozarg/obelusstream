@@ -37,6 +37,7 @@ export default function MovieCard({
   // State for favourite
   const [favourite, setFavourite] = useState(false);
   const [openMovieBox, setOpenMovieBox] = useState(false);
+  const [isFurthestX, setIsFurthestX] = useState(false);
 
   const router = useRouter();
 
@@ -95,8 +96,15 @@ export default function MovieCard({
     // Movie Card
     <div
       className="moviecard"
-      onMouseEnter={() => {
+      onMouseEnter={(event) => {
         setOpenMovieBox(true);
+
+        var x = event.screenX;
+        var y = event.screenY;
+
+        if (x >= 1050) {
+          setIsFurthestX(true);
+        }
       }}
       onMouseLeave={() => {
         setOpenMovieBox(false);
@@ -188,6 +196,7 @@ export default function MovieCard({
           runtime={runtime}
           country={country}
           genre={genre}
+          left={!isFurthestX ? 49 : -139}
         />
       )}
     </div>

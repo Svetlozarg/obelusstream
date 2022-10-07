@@ -7,9 +7,10 @@ export default function MovieInfoBox({
   runtime = 60,
   country = '',
   genre = '',
+  left = 49,
 }) {
   return (
-    <div className="movieInfoBox">
+    <div className="movieInfoBox" style={{ left: left + '%' }}>
       <h4>{title}</h4>
       <div className="movieInfoBox-flex">
         <p className="quality">{quality}</p>
