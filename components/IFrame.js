@@ -3,59 +3,80 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function IFrame({ id = '', season = '', episode = '' }) {
   // State for iframe loaded
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   // State for loading
   const [loading, setLoading] = useState(true);
 
   // Create empty iframe if not loaded
   const createEmptyIframe = () => {
-    const parent = document.getElementById('movie-wrapper');
+    if (document.getElementById('movieIframe').contentWindow.length === 0) {
+      const parent = document.getElementById('movie-wrapper');
 
-    const newDiv = document.createElement('div');
+      const newDiv = document.createElement('div');
 
-    const newP = document.createElement('p');
-    const newText = document.createTextNode('Video has not been added yet');
-    newP.appendChild(newText);
+      const newP = document.createElement('p');
+      const newText = document.createTextNode('Video has not been added yet');
+      newP.appendChild(newText);
 
-    newDiv.classList.add('empty-iframe');
-    newDiv.appendChild(newP);
-    parent.appendChild(newDiv);
+      newDiv.classList.add('empty-iframe');
+      newDiv.appendChild(newP);
+      parent.appendChild(newDiv);
+
+      setLoaded(false);
+    }
+  };
+
+  const createIframe = () => {
+    setLoading(true);
+    if (id !== undefined) {
+      if (document.getElementById('movieIframe').contentWindow.length === 0) {
+      }
+      console.log(id);
+    }
+    setTimeout(() => {
+      setLoading(false);
+      createEmptyIframe();
+    }, 1500);
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-      if (document.getElementById('movieIframe').contentWindow.length === 0) {
-        setLoaded(true);
-        createEmptyIframe();
-      }
-    }, 1000);
-  }, [id]);
+    createIframe();
+  }, []);
 
   return (
-    <div className="movie-wrapper" id="movie-wrapper">
+    <div className='movie-wrapper' id='movie-wrapper'>
       {loading && (
-        <div className="loading-div">
-          <ClipLoader color={'#123abv'} loading={loading} size={80} />
+        <div className='iframe-loading' src=''>
+          <div id='load'>
+            <div>G</div>
+            <div>N</div>
+            <div>I</div>
+            <div>D</div>
+            <div>A</div>
+            <div>O</div>
+            <div>L</div>
+          </div>
         </div>
       )}
-      <iframe
-        id="movieIframe"
-        style={loading || loaded ? { display: 'none' } : { display: 'block' }}
-        src={
-          season && episode
-            ? 'https://vidsrc.me/embed/' +
-              id +
-              '/' +
-              season +
-              '-' +
-              episode +
-              '/'
-            : 'https://vidsrc.me/embed/' + id
-        }
-        frameBorder="0"
-        allowFullScreen
-      ></iframe>
+      {loaded && (
+        <iframe
+          id='movieIframe'
+          style={loading ? { display: 'none' } : { display: 'block' }}
+          src={
+            season && episode
+              ? 'https://vidsrc.me/embed/' +
+                id +
+                '/' +
+                season +
+                '-' +
+                episode +
+                '/'
+              : 'https://vidsrc.me/embed/' + id
+          }
+          frameBorder='0'
+          allowFullScreen
+        />
+      )}
     </div>
   );
 }
