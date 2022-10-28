@@ -530,6 +530,50 @@ footer .arrow-up {
   font-size: .9rem;
 }
 
+.movie-loading-skeleton {
+  width: 100%;
+  max-width: 1780px;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, max-content));
+  grid-gap: 16px;
+  justify-content: center;
+}
+
+.skeleton-cjtpzwmve7u:empty {
+  position: relative;
+  width: 180px;
+  height: 310px;
+  background-color: #343a40;
+  border-radius: 0px 0px 0px 0px;
+  background-image: linear-gradient( #414950 20px, transparent 0 ),linear-gradient( #414950 20px, transparent 0 ),linear-gradient( #414950 20px, transparent 0 ),linear-gradient( #414950 20px, transparent 0 ),linear-gradient( #4a525a 240px, transparent 0 );
+  background-repeat: repeat-y;
+  background-size: 40px 345px,40px 345px,40px 345px,170px 345px,170px 345px;
+  background-position: 150px 293px,85px 293px,20px 293px,20px 267px,20px 20px;
+}
+.skeleton-cjtpzwmve7u:empty:before {
+  content: ' ';
+   position: absolute;
+   z-index: 1000;
+   width: 180px;
+   height: 310px;
+  -webkit-mask-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% );
+   -webkit-mask-repeat : repeat-y;
+   -webkit-mask-size : 50px 345px;
+   -webkit-mask-position: -20% 0;
+  background-image: linear-gradient( rgb(163, 163, 163) 20px, transparent 0 ),linear-gradient( rgba(163, 163, 163) 20px, transparent 0 ),linear-gradient( rgba(163, 163, 163) 20px, transparent 0 ),linear-gradient( rgba(163, 163, 163) 20px, transparent 0 ),linear-gradient( rgba(163, 163, 163) 240px, transparent 0 );
+  background-repeat: repeat-y;
+  background-size: 40px 345px,40px 345px,40px 345px,170px 345px,170px 345px;
+  background-position: 150px 293px,85px 293px,20px 293px,20px 267px,20px 20px;
+  animation: shineForSkeleton-cjtpzwmve7u 2s infinite;
+}
+@keyframes shineForSkeleton-cjtpzwmve7u {
+  to {
+      -webkit-mask-position: 120% 0
+  }
+}
+
+
 /* Single Movie */
 .single-movie {
   width: 100%;
@@ -1466,3 +1510,4 @@ footer .arrow-up {
 .movieInfoBox .genre {
   margin: .5rem 0;
 }
+

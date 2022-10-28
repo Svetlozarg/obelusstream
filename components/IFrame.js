@@ -28,11 +28,6 @@ export default function IFrame({ id = '', season = '', episode = '' }) {
 
   const createIframe = () => {
     setLoading(true);
-    if (id !== undefined) {
-      if (document.getElementById('movieIframe').contentWindow.length === 0) {
-      }
-      console.log(id);
-    }
     setTimeout(() => {
       setLoading(false);
       createEmptyIframe();

@@ -95,7 +95,7 @@ export default function MovieCard({
   return (
     // Movie Card
     <div
-      className="moviecard"
+      className='moviecard'
       onMouseEnter={(event) => {
         setOpenMovieBox(true);
 
@@ -110,12 +110,18 @@ export default function MovieCard({
         setOpenMovieBox(false);
       }}
     >
-      <div className="moviecard-img">
+      <div className='moviecard-img'>
         {/* Movie Image */}
-        <Image src={img} alt="Movie Image" width={170} height={240} />
+        <Image
+          src={img}
+          alt='Movie Image'
+          width={170}
+          height={240}
+          loading='lazy'
+        />
 
         {tag === 'TV' && (
-          <div className="season-info-count">
+          <div className='season-info-count'>
             <p>S{seasons}</p>
             <p>E{episodes}</p>
           </div>
@@ -129,9 +135,9 @@ export default function MovieCard({
               color: '#E94560',
               width: '30px',
             }}
-            size="2xl"
-            className="heart-icon"
-            title="Remove Favourite"
+            size='2xl'
+            className='heart-icon'
+            title='Remove Favourite'
             onClick={(e) => removeFavourite(e)}
           ></FontAwesomeIcon>
         )}
@@ -144,9 +150,9 @@ export default function MovieCard({
               color: '#fff',
               width: '30px',
             }}
-            size="2xl"
-            className="heart-icon"
-            title="Add Favourite"
+            size='2xl'
+            className='heart-icon'
+            title='Add Favourite'
             onClick={(e) => addFavourite(e)}
           ></FontAwesomeIcon>
         )}
@@ -158,15 +164,15 @@ export default function MovieCard({
             color: '#fff',
             width: '30px',
           }}
-          size="2xl"
-          className="play-icon"
+          size='2xl'
+          className='play-icon'
         ></FontAwesomeIcon>
       </div>
 
-      <div className="moviecard-cont">
+      <div className='moviecard-cont'>
         {/* Title */}
         <h4>{title.length >= 10 ? title.substring(0, 20) : title}</h4>
-        <div className="moviecard-cont-div">
+        <div className='moviecard-cont-div'>
           {/* Year */}
           <p>{year}</p>
           {/* Vote */}
@@ -192,7 +198,7 @@ export default function MovieCard({
           vote={vote}
           year={year}
           description={description}
-          quality="HD"
+          quality='HD'
           runtime={runtime}
           country={country}
           genre={genre}

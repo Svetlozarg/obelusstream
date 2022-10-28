@@ -15,6 +15,7 @@ export default function Home({ movies, series }) {
   // State to hold series info
   const [getSeriesInfo, setSeriesInfo] = useState([]);
   const [getMoviesInfo, setMoviesInfo] = useState([]);
+  const [loading, setLoading] = useState(true);
   // Ref for search
   const query = useRef('');
 
@@ -44,7 +45,9 @@ export default function Home({ movies, series }) {
       }
     });
 
-    console.log(getMoviesInfo);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   };
 
   useEffect(() => {
@@ -56,25 +59,25 @@ export default function Home({ movies, series }) {
       <Head>
         <title>ObelusStream</title>
         <meta
-          name="description"
-          content="A movie and serie streaming website"
+          name='description'
+          content='A movie and serie streaming website'
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
       {/* Main Search */}
-      <div className="main-search">
-        <div className="main-search-cont">
+      <div className='main-search'>
+        <div className='main-search-cont'>
           <h2>Find Movies or Series to watch</h2>
-          <div className="main-search-cont-div">
-            <div id="searchUsers" className="top-search">
-              <div className="top-search__input-container">
+          <div className='main-search-cont-div'>
+            <div id='searchUsers' className='top-search'>
+              <div className='top-search__input-container'>
                 {/* Search */}
                 <input
-                  className="top-search__input"
-                  type="text"
-                  spellCheck="false"
-                  placeholder="Search..."
+                  className='top-search__input'
+                  type='text'
+                  spellCheck='false'
+                  placeholder='Search...'
                   ref={query}
                   onKeyPress={onKeyPress}
                 />
@@ -89,9 +92,37 @@ export default function Home({ movies, series }) {
       </div>
 
       {/* Trending Movies */}
-      <div className="trending">
+      <div className='trending'>
         <h2>Trending Movies</h2>
-        <div className="trending-wrapper">
+        {loading && (
+          <div className='movie-loading-skeleton'>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+          </div>
+        )}
+
+        <div
+          className='trending-wrapper'
+          style={loading ? { display: 'none' } : { display: 'grid' }}
+        >
           {/* Iterate over trending movies */}
           {getMoviesInfo.map((movie) => {
             // Get first part of date
@@ -112,7 +143,7 @@ export default function Home({ movies, series }) {
                     description={movie.overview}
                     year={splitDate[0]}
                     vote={movie.vote_average.toFixed(1)}
-                    tag="Movie"
+                    tag='Movie'
                     runtime={movie.runtime}
                     country={movie.production_countries[0].name}
                     genre={movie.genres}
@@ -128,9 +159,36 @@ export default function Home({ movies, series }) {
       </div>
 
       {/* Trending Series */}
-      <div className="trending">
+      <div className='trending'>
         <h2>Trending Series</h2>
-        <div className="trending-wrapper">
+        {loading && (
+          <div className='movie-loading-skeleton'>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+            <div className='skeleton-cjtpzwmve7u'></div>
+          </div>
+        )}
+        <div
+          className='trending-wrapper'
+          style={loading ? { display: 'none' } : { display: 'grid' }}
+        >
           {/* Iterate over trending series */}
           {getSeriesInfo.map((serie) => {
             if (
@@ -161,7 +219,7 @@ export default function Home({ movies, series }) {
                       }
                       vote={serie.vote_average.toFixed(1)}
                       description={serie.overview}
-                      tag="TV"
+                      tag='TV'
                       runtime={serie.episode_run_time[0]}
                       country={serie.origin_country[0]}
                       seasons={serie.last_episode_to_air?.season_number}
