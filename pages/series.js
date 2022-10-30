@@ -1,14 +1,14 @@
-import { UserAuth } from "../context/AuthContext";
-import { getSeries } from "../utils/series";
-import IFrame from "../components/IFrame";
-import InfoBlock from "../components/InfoBlock";
-import { getSeriesTrailer } from "../utils/trailer";
-import CastMembers from "../components/CastMembers";
-import { fetchCastSeries } from "../utils/cast";
-import { getRelatedSeries } from "../utils/related";
-import Related from "../components/Related";
-import SeriesContent from "../components/SeriesContent";
-import { getEpisodes } from "../utils/series";
+import { UserAuth } from '../context/AuthContext';
+import { getSeries } from '../utils/series';
+import IFrame from '../components/IFrame';
+import InfoBlock from '../components/InfoBlock';
+import { getSeriesTrailer } from '../utils/trailer';
+import CastMembers from '../components/CastMembers';
+import { fetchCastSeries } from '../utils/cast';
+import { getRelatedSeries } from '../utils/related';
+import Related from '../components/Related';
+import SeriesContent from '../components/SeriesContent';
+import { getEpisodes } from '../utils/series';
 
 export default function Series({
   series,
@@ -23,10 +23,10 @@ export default function Series({
   const { user } = UserAuth();
 
   return (
-    <div className="single-movie">
+    <div className='single-movie'>
       {/* Series Path */}
-      <p className="series-path">
-        Home / Series / {series?.original_name} - Season {seasonNumber} Episode{" "}
+      <p className='series-path'>
+        Home / Series / {series?.original_name} - Season {seasonNumber} Episode{' '}
         {episodeNumber}
       </p>
 
@@ -43,24 +43,24 @@ export default function Series({
 
       {/* Series Information */}
       <InfoBlock
-        id={series.id}
-        img={series.poster_path}
-        title={series.original_name}
-        rate={series.vote_average.toFixed(1)}
-        description={series.overview}
-        date={series.first_air_date}
-        genre={series.genres}
-        seasons={series.number_of_seasons}
-        country={series.production_countries}
-        production={series.production_companies}
+        id={series?.id}
+        img={series?.poster_path}
+        title={series?.original_name}
+        rate={series?.vote_average.toFixed(1)}
+        description={series?.overview}
+        date={series?.first_air_date}
+        genre={series?.genres}
+        seasons={series?.number_of_seasons}
+        country={series?.production_countries}
+        production={series?.production_companies}
         trailer={trailer}
       />
 
       {/* Cast Members */}
-      <CastMembers cast={cast.cast} />
+      <CastMembers cast={cast?.cast} />
 
       {/* Related Movies */}
-      <Related type="tv" related={related} />
+      <Related type='tv' related={related} />
     </div>
   );
 }
