@@ -35,6 +35,12 @@ export default function MovieCard() {
     }
   };
 
+  const pull_data = (data) => {
+    if (data) {
+      query.current.value = '';
+    }
+  };
+
   // Toggle mobile menu
   const toggle = () => setActive(!active);
 
@@ -106,7 +112,7 @@ export default function MovieCard() {
 
   return (
     // Header
-    <header id="header">
+    <header id='header'>
       {/* Logo */}
       <Link
         href={{
@@ -115,7 +121,7 @@ export default function MovieCard() {
         passHref={true}
       >
         <a>
-          <Image src={logo} alt="" width={350} height={150} />
+          <Image src={logo} alt='' width={350} height={150} />
         </a>
       </Link>
 
@@ -131,7 +137,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/"
+                  id='/'
                   style={
                     activePage === '/'
                       ? { borderBottom: '2px solid #fff' }
@@ -151,7 +157,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/movies"
+                  id='/movies'
                   style={
                     activePage === '/movies'
                       ? { borderBottom: '2px solid #fff' }
@@ -171,7 +177,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/exploreSeries"
+                  id='/exploreSeries'
                   style={
                     activePage === '/exploreSeries'
                       ? { borderBottom: '2px solid #fff' }
@@ -192,7 +198,7 @@ export default function MovieCard() {
                   passHref={true}
                 >
                   <a
-                    id="/favorites"
+                    id='/favorites'
                     style={
                       activePage === '/favorites'
                         ? { borderBottom: '2px solid #fff' }
@@ -219,7 +225,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/"
+                  id='/'
                   style={
                     activePage === '/'
                       ? { borderBottom: '2px solid #fff' }
@@ -230,7 +236,7 @@ export default function MovieCard() {
                 </a>
               </Link>
             </li>
-            <li onClick={handleActiveLink} className="second-child">
+            <li onClick={handleActiveLink} className='second-child'>
               <Link
                 href={{
                   pathname: '/movies',
@@ -238,7 +244,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/movies"
+                  id='/movies'
                   style={
                     activePage === '/movies'
                       ? { borderBottom: '2px solid #fff' }
@@ -248,7 +254,7 @@ export default function MovieCard() {
                   Movies
                 </a>
               </Link>
-              <ul className="dropdown">
+              <ul className='dropdown'>
                 <li>
                   <Link
                     href={{
@@ -257,7 +263,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -277,7 +283,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -297,7 +303,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -317,7 +323,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -337,7 +343,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -357,7 +363,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -377,7 +383,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -397,7 +403,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -417,7 +423,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -437,7 +443,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -457,7 +463,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -477,7 +483,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -497,7 +503,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -517,7 +523,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -537,7 +543,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -557,7 +563,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -577,7 +583,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/thriller"
+                      id='/thriller'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -597,7 +603,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/war"
+                      id='/war'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -617,7 +623,7 @@ export default function MovieCard() {
                     passHref={true}
                   >
                     <a
-                      id="/movies"
+                      id='/movies'
                       style={
                         activePage === '/movies'
                           ? { borderBottom: '2px solid #fff' }
@@ -638,7 +644,7 @@ export default function MovieCard() {
                 passHref={true}
               >
                 <a
-                  id="/exploreSeries"
+                  id='/exploreSeries'
                   style={
                     activePage === '/exploreSeries'
                       ? { borderBottom: '2px solid #fff' }
@@ -658,7 +664,7 @@ export default function MovieCard() {
                   passHref={true}
                 >
                   <a
-                    id="/favorites"
+                    id='/favorites'
                     style={
                       activePage === '/favorites'
                         ? { borderBottom: '2px solid #fff' }
@@ -674,15 +680,15 @@ export default function MovieCard() {
         )}
       </nav>
 
-      <div className="header-right-div">
+      <div className='header-right-div'>
         {/* Search */}
-        <div id="searchUsers" className="instant-search">
-          <div className="instant-search__input-container">
+        <div id='searchUsers' className='instant-search'>
+          <div className='instant-search__input-container'>
             <input
-              className="instant-search__input"
-              type="text"
-              spellCheck="false"
-              placeholder="Search..."
+              className='instant-search__input'
+              type='text'
+              spellCheck='false'
+              placeholder='Search...'
               ref={query}
               onKeyPress={onKeyPress}
               onChange={handleAutoComplete}
@@ -693,8 +699,11 @@ export default function MovieCard() {
             ></FontAwesomeIcon>
           </div>
 
-          {autoComplete !== '' && (
-            <AutoComplete autoCompleteSearch={autoComplete} />
+          {autoComplete !== '' && query.current.value !== '' && (
+            <AutoComplete
+              autoCompleteSearch={autoComplete}
+              closeACBox={pull_data}
+            />
           )}
         </div>
 
@@ -702,8 +711,8 @@ export default function MovieCard() {
           <FontAwesomeIcon
             icon={faSignOut}
             style={{ color: '#fff', width: '25px', cursor: 'pointer' }}
-            size="lg"
-            name="Logout"
+            size='lg'
+            name='Logout'
             onClick={handleSignOut}
           ></FontAwesomeIcon>
         ) : (
@@ -717,7 +726,7 @@ export default function MovieCard() {
               <FontAwesomeIcon
                 icon={faUser}
                 style={{ color: '#fff', width: '25px' }}
-                size="lg"
+                size='lg'
               ></FontAwesomeIcon>
             </a>
           </Link>
@@ -726,7 +735,7 @@ export default function MovieCard() {
         {/* Hamburger Icon */}
         {!active && (
           <FontAwesomeIcon
-            className="hamburger"
+            className='hamburger'
             icon={faHamburger}
             style={{ color: '#fff', width: '25px', marginRight: '20px' }}
             onClick={toggle}
@@ -736,7 +745,7 @@ export default function MovieCard() {
         {/* X Icon */}
         {active && (
           <FontAwesomeIcon
-            className="hamburger"
+            className='hamburger'
             icon={faX}
             style={{ color: '#fff', width: '25px', marginRight: '20px' }}
             onClick={toggle}
