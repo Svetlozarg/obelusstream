@@ -150,31 +150,32 @@ export default function Favorites() {
           >
             {/* Iterate over favourite movies */}
             {movies.map((movie) => {
+              if (movie === undefined) return;
               // Get first part of date
-              const splitDate = movie.release_date.split('-');
+              const splitDate = movie?.release_date.split('-');
               return (
                 <Link
                   href={{
                     pathname: '/movie',
-                    query: { id: movie.id },
+                    query: { id: movie?.id },
                   }}
-                  key={movie.id}
+                  key={movie?.id}
                   passHref={true}
                 >
                   <a>
                     <MovieCard
-                      id={movie.id}
-                      title={movie.original_title}
+                      id={movie?.id}
+                      title={movie?.original_title}
                       year={splitDate[0]}
-                      vote={movie.vote_average.toFixed(1)}
+                      vote={movie?.vote_average.toFixed(1)}
                       tag="Movie"
-                      description={movie.overview}
-                      runtime={movie.runtime}
-                      country={movie.original_language}
-                      genre={movie.genres}
+                      description={movie?.overview}
+                      runtime={movie?.runtime}
+                      country={movie?.original_language}
+                      genre={movie?.genres}
                       img={
                         'https://image.tmdb.org/t/p/original/' +
-                        movie.poster_path
+                        movie?.poster_path
                       }
                     />
                   </a>
@@ -222,6 +223,7 @@ export default function Favorites() {
           >
             {/* Iterate over favourite series */}
             {series.map((serie) => {
+              if (serie === undefined) return;
               // Get first part of date
               const splitDate = serie?.last_air_date?.split('-');
               const splitDateFirst = serie?.first_air_date?.split('-');
@@ -230,31 +232,31 @@ export default function Favorites() {
                 <Link
                   href={{
                     pathname: '/series',
-                    query: { id: serie.id, season: '1', episode: '1' },
+                    query: { id: serie?.id, season: '1', episode: '1' },
                   }}
-                  key={serie.id}
+                  key={serie?.id}
                   passHref={true}
                 >
                   <a>
                     <MovieCard
-                      id={serie.id}
-                      title={serie.name}
+                      id={serie?.id}
+                      title={serie?.name}
                       year={
                         splitDate !== undefined
                           ? splitDate[0]
                           : splitDateFirst[0]
                       }
-                      vote={serie.vote_average.toFixed(1)}
+                      vote={serie?.vote_average.toFixed(1)}
                       tag="TV"
-                      seasons={serie.last_episode_to_air?.season_number}
-                      episodes={serie.last_episode_to_air?.episode_number}
-                      description={serie.overview}
-                      runtime={serie.episode_run_time[0]}
-                      country={serie.origin_country[0]}
-                      genre={serie.genres}
+                      seasons={serie?.last_episode_to_air?.season_number}
+                      episodes={serie?.last_episode_to_air?.episode_number}
+                      description={serie?.overview}
+                      runtime={serie?.episode_run_time[0]}
+                      country={serie?.origin_country[0]}
+                      genre={serie?.genres}
                       img={
                         'https://image.tmdb.org/t/p/original/' +
-                        serie.poster_path
+                        serie?.poster_path
                       }
                     />
                   </a>

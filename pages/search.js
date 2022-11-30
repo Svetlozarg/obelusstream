@@ -1,10 +1,10 @@
-import Link from "next/link";
-import { getSearch } from "../utils/search";
+import Link from 'next/link';
+import { getSearch } from '../utils/search';
 
-import MovieCard from "../components/MovieCard";
-import { useState, useEffect } from "react";
-import { getSeries } from "../utils/series";
-import { getMovie } from "../utils/movie";
+import MovieCard from '../components/MovieCard';
+import { useState, useEffect } from 'react';
+import { getSeries } from '../utils/series';
+import { getMovie } from '../utils/movie';
 
 export default function Search({ search, query }) {
   // State to hold series info
@@ -14,9 +14,9 @@ export default function Search({ search, query }) {
     const seriesID = [];
     const moviesID = [];
     search.results.map((id) => {
-      if (id.media_type === "movie") {
+      if (id.media_type === 'movie') {
         moviesID.push(id.id);
-      } else if (id.media_type === "tv") {
+      } else if (id.media_type === 'tv') {
         seriesID.push(id.id);
       }
     });
@@ -33,7 +33,7 @@ export default function Search({ search, query }) {
       resultArr.push(await getMovie(movieResult));
 
       if (i === moviesID.length - 1) {
-        setSeriesInfo((oldMovies) => [...oldMovies, ...moviesID]);
+        setSeriesInfo(resultArr);
       }
     });
   };
@@ -73,11 +73,11 @@ export default function Search({ search, query }) {
               result.release_date &&
               result.overview
             ) {
-              const splitDate = result.release_date.split("-");
+              const splitDate = result.release_date.split('-');
               return (
                 <Link
                   href={{
-                    pathname: "/movie",
+                    pathname: '/movie',
                     query: { id: result.id },
                   }}
                   key={result.id}
@@ -91,7 +91,7 @@ export default function Search({ search, query }) {
                       vote={result.vote_average.toFixed(1)}
                       tag="Movie"
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         result.poster_path
                       }
                     />
@@ -108,14 +108,14 @@ export default function Search({ search, query }) {
               result.origin_country.length !== 0
             ) {
               // Get first part of date
-              const splitDate = result?.last_air_date?.split("-");
-              const splitDateFirst = result?.first_air_date?.split("-");
+              const splitDate = result?.last_air_date?.split('-');
+              const splitDateFirst = result?.first_air_date?.split('-');
 
               return (
                 <Link
                   href={{
-                    pathname: "/series",
-                    query: { id: result.id, season: "1", episode: "1" },
+                    pathname: '/series',
+                    query: { id: result.id, season: '1', episode: '1' },
                   }}
                   key={result.id}
                   passHref={true}
@@ -134,7 +134,7 @@ export default function Search({ search, query }) {
                       seasons={result.last_episode_to_air?.season_number}
                       episodes={result.last_episode_to_air?.episode_number}
                       img={
-                        "https://image.tmdb.org/t/p/original/" +
+                        'https://image.tmdb.org/t/p/original/' +
                         result.poster_path
                       }
                     />
@@ -147,8 +147,8 @@ export default function Search({ search, query }) {
       </div>
     );
   } else {
-    if (typeof window !== "undefined") {
-      window.location.href = "/";
+    if (typeof window !== 'undefined') {
+      window.location.href = '/';
     }
   }
 }
