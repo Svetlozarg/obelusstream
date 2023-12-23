@@ -32,7 +32,10 @@ const Navigation = () => {
   ];
 
   useEffect(() => {
-    const currentPath = window.location.pathname.toLowerCase();
+    const currentPath =
+      typeof window !== "undefined"
+        ? window.location.pathname.toLowerCase()
+        : "";
     if (
       currentPath.includes("/explore/movies") ||
       currentPath.includes("/movie")

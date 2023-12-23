@@ -51,7 +51,11 @@ const MovieDescription: React.FC<MovieDescriptionProps> = ({
           <Button
             sx={{ width: "8rem" }}
             variant="contained"
-            onClick={() => window.open(movieTrailer, "_blank")}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.open(movieTrailer, "_blank");
+              }
+            }}
           >
             <VideocamIcon />
             Trailer

@@ -51,7 +51,11 @@ const SeriesDescription: React.FC<SeriesDescriptionProps> = ({
           <Button
             sx={{ width: "8rem" }}
             variant="contained"
-            onClick={() => window.open(seriesTrailer, "_blank")}
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.open(seriesTrailer, "_blank");
+              }
+            }}
           >
             <VideocamIcon />
             Trailer

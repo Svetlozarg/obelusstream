@@ -34,7 +34,6 @@ interface SeriesParamsProps {
 }
 
 const SeriesPage = () => {
-  const location = window.location;
   const [seriesParams, setSeriesParams] = useState<SeriesParamsProps>();
   const [seriesData, setSeriesData] = useState<Series>();
   const [seriesRecommendations, setSeriesRecommendations] = useState<
@@ -54,7 +53,7 @@ const SeriesPage = () => {
     if (id && season && episode) {
       setSeriesParams({ id, season, episode });
     }
-  }, [location.search]);
+  }, []);
 
   useEffect(() => {
     (async () => {

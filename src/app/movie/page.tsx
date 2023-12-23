@@ -23,7 +23,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const MoviePage = () => {
-  const location = window.location;
   const [movieId, setMovieId] = useState<string>();
   const [movieData, setMovieData] = useState<Movie>();
   const [movieRecommendations, setMovieRecommendations] = useState<Movie[]>();
@@ -38,7 +37,7 @@ const MoviePage = () => {
     if (id) {
       setMovieId(id);
     }
-  }, [location.search]);
+  }, []);
 
   useEffect(() => {
     (async () => {

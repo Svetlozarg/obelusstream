@@ -69,7 +69,9 @@ const SeriesPage = () => {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
