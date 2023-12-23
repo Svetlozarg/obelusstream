@@ -80,7 +80,7 @@ const MoviePage = () => {
 
   return (
     <Container>
-      <Box px={10} pt={4}>
+      <Box px={{ sm: 0.5, md: 1, lg: 10 }} pt={4}>
         <Breadcrumbs link={movieData.original_title} />
 
         <Player movieId={movieData.id} />

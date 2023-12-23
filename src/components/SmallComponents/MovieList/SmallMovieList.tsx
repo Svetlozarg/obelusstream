@@ -22,7 +22,8 @@ export const SmallMovieList: React.FC<SmallMovieListProps> = ({
       <Typography
         component="h2"
         variant="h2"
-        width="20rem"
+        width="100%"
+        maxWidth="20rem"
         borderBottom={"2px solid " + theme.palette.common.white}
         pb={1}
       >

@@ -27,7 +27,9 @@ const Search: React.FC<SearchProps> = ({ big }) => {
           InputProps={{
             endAdornment: <SearchIcon />,
             style: {
-              width: big ? "30rem" : "18rem",
+              width: "100%",
+              maxWidth: big ? "30rem" : "18rem",
+              minWidth: big ? "20rem" : "18rem",
               height: big ? "3rem" : "2.5rem",
               backgroundColor: theme.palette.common.white,
               color: theme.palette.common.black,
