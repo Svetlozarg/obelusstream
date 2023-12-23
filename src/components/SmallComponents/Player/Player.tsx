@@ -15,7 +15,7 @@ const Player: React.FC<PlayerProps> = ({ movieId, series }) => {
     <Box
       sx={{
         width: "100%",
-        height: "700px",
+        height: "80vh",
         bgcolor: "black",
         borderRadius: "10px",
         my: 4,
@@ -26,7 +26,7 @@ const Player: React.FC<PlayerProps> = ({ movieId, series }) => {
           src={`https://vidsrc.xyz/embed/movie/${movieId}`}
           style={{
             width: "100%",
-            height: "700px",
+            height: "80vh",
             borderRadius: "10px",
             border: "none",
           }}
