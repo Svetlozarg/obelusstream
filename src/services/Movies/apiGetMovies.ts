@@ -39,3 +39,8 @@ export const getAllMovieGenres = (): Query => ({
   endpoint: "genre/movie/list",
   method: "GET",
 });
+
+export const getMovieKeywords = (movie_id: number): Query => ({
+  endpoint: `movie/${movie_id}/keywords`,
+  method: "GET",
+});

@@ -132,6 +132,13 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: "#FFFFFF",
+        },
+      },
+    },
   },
 };
 

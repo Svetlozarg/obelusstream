@@ -2,6 +2,7 @@ import {
   Typography,
   Breadcrumbs as MUIBreadcrumbs,
   useTheme,
+  Link,
 } from "@mui/material";
 
 interface BreadcrumbsProps {
@@ -14,13 +15,17 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ link, series }) => {
 
   return (
     <MUIBreadcrumbs sx={{ color: theme.palette.common.white }}>
-      <Typography variant="body1" component="p">
-        Home
-      </Typography>
-      <Typography variant="body1" component="p">
-        {series ? "Series" : "Movies"}
-      </Typography>
-      <Typography variant="body1" component="p">
+      <Link href="/">
+        <Typography variant="h4" component="p" fontWeight="normal">
+          Home
+        </Typography>
+      </Link>
+      <Link href={series ? "/explore/series" : "/explore/movies"}>
+        <Typography variant="h4" component="p" fontWeight="normal">
+          {series ? "Series" : "Movies"}
+        </Typography>
+      </Link>
+      <Typography variant="h4" component="p">
         {link}
       </Typography>
     </MUIBreadcrumbs>

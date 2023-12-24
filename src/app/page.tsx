@@ -27,6 +27,7 @@ export default function Home() {
   const [popularSeriesList, setPopularSeriesList] = useState<SeriesFromList[]>(
     []
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -51,6 +52,8 @@ export default function Home() {
           query: getPopularTvShows,
         });
         setPopularSeriesList(popularSeriesData.results);
+
+        setLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -76,13 +79,29 @@ export default function Home() {
         <Search big />
       </Stack>
 
-      <SmallMovieList title="Trending Movies" moviesData={trendingMovies} />
+      <SmallMovieList
+        title="Trending Movies"
+        moviesData={trendingMovies}
+        loading={loading}
+      />
 
-      <SmallMovieList title="Trending Series" seriesData={trendingSeries} />
+      <SmallMovieList
+        title="Trending Series"
+        seriesData={trendingSeries}
+        loading={loading}
+      />
 
-      <SmallMovieList title="Popular Movies" moviesData={popularMovieList} />
+      <SmallMovieList
+        title="Popular Movies"
+        moviesData={popularMovieList}
+        loading={loading}
+      />
 
-      <SmallMovieList title="Popular Series" seriesData={popularSeriesList} />
+      <SmallMovieList
+        title="Popular Series"
+        seriesData={popularSeriesList}
+        loading={loading}
+      />
     </Container>
   );
 }

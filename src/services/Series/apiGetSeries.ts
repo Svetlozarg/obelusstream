@@ -47,3 +47,8 @@ export const getAllSeriesGenres = (): Query => ({
   endpoint: "genre/tv/list",
   method: "GET",
 });
+
+export const getSeriesKeywords = (series_id: number): Query => ({
+  endpoint: `tv/${series_id}/keywords`,
+  method: "GET",
+});

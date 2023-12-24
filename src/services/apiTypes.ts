@@ -109,10 +109,37 @@ export type Series = {
   in_production: boolean;
   languages: string[];
   last_air_date: string;
-  last_episode_to_air: Object[];
+  last_episode_to_air: {
+    air_date: string;
+    episode_number: number;
+    id: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    season_number: number;
+    still_path: string;
+    vote_average: number;
+    vote_count: number;
+  }[];
   name: string;
-  networks: Object[];
-  next_episode_to_air: Object[];
+  networks: {
+    name: string;
+    id: number;
+    logo_path: string;
+    origin_country: string;
+  }[];
+  next_episode_to_air: {
+    air_date: string;
+    episode_number: number;
+    id: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    season_number: number;
+    still_path: string;
+    vote_average: number;
+    vote_count: number;
+  }[];
   number_of_episodes: number;
   number_of_seasons: number;
   origin_country: string[];
@@ -132,7 +159,11 @@ export type Series = {
     name: string;
   }[];
   seasons: Season[];
-  spoken_languages: Object[];
+  spoken_languages: {
+    english_name: string;
+    iso_639_1: string;
+    name: string;
+  }[];
   status: string;
   tagline: string;
   type: string;
@@ -244,6 +275,16 @@ export type GenresList = {
 };
 
 export type Genre = {
+  id: number;
+  name: string;
+};
+
+export type KeyWordsResult = {
+  id: number;
+  keywords: KeyWord[];
+};
+
+export type KeyWord = {
   id: number;
   name: string;
 };

@@ -43,6 +43,7 @@ const SeriesPage = () => {
   const [castData, setCastData] = useState<Member[]>([]);
   const [seriesSeason, setseriesSeason] = useState<Episode[]>([]);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -88,6 +89,7 @@ const SeriesPage = () => {
           });
           setseriesSeason(seriesSeasonData.episodes);
         }
+        setLoading(false);
       } catch (err) {
         console.log(err);
         router.push("/");
@@ -100,11 +102,20 @@ const SeriesPage = () => {
   return (
     <Container>
       <Box px={{ sm: 0.5, md: 1, lg: 10 }} pt={4}>
-        <Breadcrumbs link={seriesData.name} series />
+        <Breadcrumbs
+          link={
+            seriesParams?.season && seriesParams?.episode
+              ? `${seriesData.name} Season ${seriesParams.season} Episode ${seriesParams.episode}`
+              : seriesData.name
+          }
+          series
+        />
 
-        {seriesParams && <Player series={seriesParams} />}
+        {seriesParams && seriesData.last_episode_to_air && (
+          <Player series={seriesParams} />
+        )}
 
-        {seriesParams && (
+        {seriesParams && seriesData.last_episode_to_air && (
           <SeriesSeasons
             seasonsData={seriesData.seasons}
             seasonData={seriesSeason}
@@ -124,6 +135,7 @@ const SeriesPage = () => {
       <SmallMovieList
         title="Recommendations"
         seriesData={seriesRecommendations}
+        loading={loading}
       />
     </Container>
   );

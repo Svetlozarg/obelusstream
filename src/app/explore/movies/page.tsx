@@ -28,6 +28,7 @@ const MoviesPage = () => {
   const [page, setPage] = useState<number>(1);
   const [value, setValue] = useState(0);
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleGetMoviesNextPage = async (
     genreId: string | null,
@@ -99,6 +100,8 @@ const MoviesPage = () => {
           pagesToFetch.map((page) => handleGetMoviesNextPage(id, page))
         );
         setPage(3);
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -194,6 +197,7 @@ const MoviesPage = () => {
             : "All Movie Genres"
         }
         moviesData={moviesData}
+        loading={loading}
       />
     </Container>
   );

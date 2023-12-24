@@ -8,12 +8,14 @@ interface SmallMovieListProps {
   title: string;
   moviesData?: Movie[];
   seriesData?: SeriesFromList[];
+  loading: boolean;
 }
 
 export const SmallMovieList: React.FC<SmallMovieListProps> = ({
   title,
   moviesData,
   seriesData,
+  loading,
 }) => {
   const theme = useTheme();
 
@@ -41,21 +43,27 @@ export const SmallMovieList: React.FC<SmallMovieListProps> = ({
       >
         {moviesData ? (
           <>
-            {moviesData.length === 0 && (
+            {moviesData.length === 0 && !loading && (
               <Typography component="h3" variant="h3">
                 No movies found
               </Typography>
             )}
             {moviesData.length > 0 &&
               moviesData.map((movieData) => {
-                return <MovieCard key={movieData.id} movieData={movieData} />;
+                return (
+                  <MovieCard
+                    key={movieData.id}
+                    movieData={movieData}
+                    loading={loading}
+                  />
+                );
               })}
           </>
         ) : null}
 
         {seriesData ? (
           <>
-            {seriesData.length === 0 && (
+            {seriesData.length === 0 && !loading && (
               <Typography component="h3" variant="h3">
                 No series found
               </Typography>
@@ -63,7 +71,11 @@ export const SmallMovieList: React.FC<SmallMovieListProps> = ({
             {seriesData.length > 0 &&
               seriesData.map((seriesData) => {
                 return (
-                  <SeriesCard key={seriesData.id} seriesData={seriesData} />
+                  <SeriesCard
+                    key={seriesData.id}
+                    seriesData={seriesData}
+                    loading={loading}
+                  />
                 );
               })}
           </>

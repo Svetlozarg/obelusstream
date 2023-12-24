@@ -9,9 +9,12 @@ import {
   getSimilarMovies,
   getMovieCredits,
   getMovieVideos,
+  getMovieKeywords,
 } from "@/services/Movies/apiGetMovies";
 import {
   CrewList,
+  KeyWord,
+  KeyWordsResult,
   Member,
   Movie,
   MovieList,
@@ -23,12 +26,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const MoviePage = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const [movieId, setMovieId] = useState<string>();
   const [movieData, setMovieData] = useState<Movie>();
   const [movieRecommendations, setMovieRecommendations] = useState<Movie[]>();
   const [castData, setCastData] = useState<Member[]>([]);
   const [movieTrailer, setMovieTrailer] = useState<string>();
-  const router = useRouter();
+  const [movieKeywords, setMovieKeywords] = useState<KeyWord[]>([]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -68,7 +73,15 @@ const MoviePage = () => {
             video.name.toLowerCase().includes("official trailer")
           )?.key;
           setMovieTrailer(movieTrailer);
+
+          const movieKeywords = await callApi<KeyWordsResult>({
+            query: getMovieKeywords(+movieId),
+          });
+          console.log(movieKeywords);
+
+          setMovieKeywords(movieKeywords.keywords);
         }
+        setLoading(false);
       } catch (err) {
         console.error(err);
         router.push("/");
@@ -88,6 +101,7 @@ const MoviePage = () => {
         <MovieDescription
           movieData={movieData}
           movieTrailer={"https://www.youtube.com/embed/" + movieTrailer}
+          movieKeywords={movieKeywords}
         />
       </Box>
 
@@ -96,6 +110,7 @@ const MoviePage = () => {
       <SmallMovieList
         title="Recommendations"
         moviesData={movieRecommendations}
+        loading={loading}
       />
     </Container>
   );

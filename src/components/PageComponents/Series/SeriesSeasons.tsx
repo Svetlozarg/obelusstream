@@ -130,7 +130,13 @@ const SeriesSeasons: React.FC<SeriesSeasonsProps> = ({
                 <Typography component="p" variant="body1">
                   Episode {episode.episode_number}: {episode.name}{" "}
                   {new Date(episode.air_date) > new Date()
-                    ? `(${episode.air_date})`
+                    ? `(${new Date(episode.air_date)
+                        .toLocaleDateString("uk-UK", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })
+                        .replace(/\//g, ".")})`
                     : null}
                 </Typography>
               </Stack>

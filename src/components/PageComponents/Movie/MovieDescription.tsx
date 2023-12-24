@@ -1,5 +1,5 @@
 "use client";
-import { Movie } from "@/services/apiTypes";
+import { KeyWord, Movie } from "@/services/apiTypes";
 import { Button, Stack, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import VideocamIcon from "@mui/icons-material/Videocam";
@@ -7,11 +7,13 @@ import VideocamIcon from "@mui/icons-material/Videocam";
 interface MovieDescriptionProps {
   movieData: Movie;
   movieTrailer: string;
+  movieKeywords: KeyWord[];
 }
 
 const MovieDescription: React.FC<MovieDescriptionProps> = ({
   movieData,
   movieTrailer,
+  movieKeywords,
 }) => {
   const theme = useTheme();
 
@@ -84,7 +86,9 @@ const MovieDescription: React.FC<MovieDescriptionProps> = ({
           <span style={{ color: theme.palette.customColors.darkRed }}>
             Duration:
           </span>{" "}
-          {movieData.runtime} minutes
+          {`${Math.floor(movieData.runtime / 60)}h ${
+            movieData.runtime % 60
+          }min`}
         </Typography>
 
         <Typography component="p" variant="body1">
@@ -102,6 +106,21 @@ const MovieDescription: React.FC<MovieDescriptionProps> = ({
           </span>{" "}
           {movieData.production_companies
             .map((company) => company.name)
+            .join(", ")}
+        </Typography>
+
+        <Typography component="p" variant="body1">
+          <span style={{ color: theme.palette.customColors.darkRed }}>
+            Keywords:
+          </span>{" "}
+          {movieKeywords
+            .map((keyword) => {
+              const words = keyword.name.split(" ");
+              const capitalizedWords = words.map((word) => {
+                return word.charAt(0).toUpperCase() + word.slice(1);
+              });
+              return capitalizedWords.join(" ");
+            })
             .join(", ")}
         </Typography>
       </Stack>

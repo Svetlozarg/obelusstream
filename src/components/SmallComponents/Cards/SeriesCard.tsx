@@ -14,15 +14,19 @@ import {
   Link,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import HTMLTooltip from "@/components/MUIComponents/HTMLTooltip";
 
 interface SeriesCardProps {
   seriesData: SeriesFromList;
+  loading: boolean;
 }
 
-export const SeriesCard: React.FC<SeriesCardProps> = ({ seriesData }) => {
+export const SeriesCard: React.FC<SeriesCardProps> = ({
+  seriesData,
+  loading,
+}) => {
   const theme = useTheme();
   const [singleSeriesData, setSingleSeriesData] = useState<Series | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -37,15 +41,7 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ seriesData }) => {
     })();
   }, [seriesData]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading) {
+  if (loading) {
     return (
       <Card
         sx={{
@@ -111,7 +107,11 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ seriesData }) => {
             marginBottom: 1,
           }}
         >
-          <Stack direction="row">
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <Typography
               component="p"
               variant="body2"
@@ -121,9 +121,24 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ seriesData }) => {
               px={0.4}
               sx={{ borderBottomRightRadius: "5px" }}
             >
-              S{singleSeriesData.number_of_seasons} E
-              {singleSeriesData.number_of_episodes}
+              S{singleSeriesData.number_of_seasons || 1} E
+              {(singleSeriesData as any).last_episode_to_air?.episode_number ||
+                1}
             </Typography>
+
+            <HTMLTooltip>
+              <Typography
+                component="p"
+                variant="h4"
+                color={theme.palette.customColors.gold}
+                mb={1}
+              >
+                {seriesData.name}
+              </Typography>
+              <Typography component="p" variant="body1">
+                {seriesData.overview}
+              </Typography>
+            </HTMLTooltip>
           </Stack>
         </Box>
         <CardContent sx={{ m: 0, p: 0 }}>
