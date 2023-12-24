@@ -1,9 +1,9 @@
 "use client";
+import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import InfoIcon from "@mui/icons-material/Info";
 import { Box, ClickAwayListener } from "@mui/material";
-import { useState } from "react";
 
 interface HTMLTooltipProps {
   children: React.ReactNode;
@@ -12,17 +12,30 @@ interface HTMLTooltipProps {
 const HTMLTooltip: React.FC<HTMLTooltipProps> = ({ children }) => {
   const theme = useTheme();
   const [openTooltip, setOpenTooltipValue] = useState(false);
+  const [openHoverTooltip, setOpenHoverTooltipValue] = useState(false);
+
+  const handleIconClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpenTooltipValue(true);
+  };
+
+  const handleTooltipClose = () => {
+    setOpenTooltipValue(false);
+  };
+
+  const handleHoverIcon = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpenHoverTooltipValue(true);
+  };
+
+  const handleHoverTooltipClose = () => {
+    setOpenHoverTooltipValue(false);
+  };
 
   return (
-    <ClickAwayListener
-      mouseEvent="onMouseDown"
-      touchEvent="onTouchStart"
-      onClickAway={() => {
-        setOpenTooltipValue(false);
-      }}
-    >
+    <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
-        open={openTooltip}
+        open={openTooltip || openHoverTooltip}
         title={
           <Box
             sx={{
@@ -36,10 +49,10 @@ const HTMLTooltip: React.FC<HTMLTooltipProps> = ({ children }) => {
             {children}
           </Box>
         }
-        onClick={(e) => {
-          e.preventDefault();
-          setOpenTooltipValue(!openTooltip);
-        }}
+        onClick={handleIconClick}
+        onMouseOver={handleHoverIcon}
+        onMouseLeave={handleHoverTooltipClose}
+        arrow
       >
         <InfoIcon
           sx={{
