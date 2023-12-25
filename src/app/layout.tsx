@@ -2,6 +2,7 @@ import Navigation from "@/components/Layout/Navigation";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import type { Metadata } from "next";
 import "./global.css";
+import Footer from "@/components/Layout/Footer";
 
 export const metadata: Metadata = {
   title: "ObelusStream",
@@ -19,6 +20,7 @@ export default function RootLayout({
         <body>
           <Navigation />
           {children}
+          <Footer />
         </body>
       </ThemeRegistry>
     </html>

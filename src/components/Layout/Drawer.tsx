@@ -12,14 +12,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Logo } from "./Logo";
-import { PageProps } from "./Navigation";
+import { pages } from "./Navigation";
 import { useRouter } from "next/navigation";
 
-interface DrawerComp {
-  pages: PageProps[];
-}
-
-const DrawerComp: React.FC<DrawerComp> = ({ pages }) => {
+const DrawerComp: React.FC = () => {
   const theme = useTheme();
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const pageRouter = useRouter();

@@ -108,6 +108,7 @@ const SeriesPage = () => {
               ? `${seriesData.name} Season ${seriesParams.season} Episode ${seriesParams.episode}`
               : seriesData.name
           }
+          loading={loading}
           series
         />
 

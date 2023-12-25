@@ -1,5 +1,5 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 
 const styles = {
   playerBox: {
@@ -27,19 +27,20 @@ interface PlayerProps {
 }
 
 const Player: React.FC<PlayerProps> = ({ movieId, series }) => {
+  const isLoading = !movieId && !series;
+
   return (
     <Box sx={styles.playerBox}>
-      {movieId && (
+      {isLoading ? (
+        <Skeleton variant="rectangular" sx={styles.player} />
+      ) : (
         <iframe
-          src={`https://vidsrc.xyz/embed/movie/${movieId}`}
-          style={styles.player}
-          referrerPolicy="origin"
-        ></iframe>
-      )}
-
-      {series && (
-        <iframe
-          src={`https://vidsrc.xyz/embed/tv/${series?.id}/${series?.season}-${series?.episode}`}
+          id="player-iframe"
+          src={
+            movieId
+              ? `https://vidsrc.xyz/embed/movie/${movieId}`
+              : `https://vidsrc.xyz/embed/tv/${series?.id}/${series?.season}-${series?.episode}`
+          }
           style={styles.player}
           referrerPolicy="origin"
         ></iframe>

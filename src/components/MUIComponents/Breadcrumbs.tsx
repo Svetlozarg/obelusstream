@@ -3,15 +3,27 @@ import {
   Breadcrumbs as MUIBreadcrumbs,
   useTheme,
   Link,
+  Skeleton,
 } from "@mui/material";
 
 interface BreadcrumbsProps {
   link: string;
   series?: boolean;
+  loading?: boolean;
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ link, series }) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ link, series, loading }) => {
   const theme = useTheme();
+
+  if (loading) {
+    return (
+      <MUIBreadcrumbs sx={{ color: theme.palette.common.white }}>
+        <Skeleton variant="text" width={100} height={30} />
+        <Skeleton variant="text" width={100} height={30} />
+        <Skeleton variant="text" width={100} height={30} />
+      </MUIBreadcrumbs>
+    );
+  }
 
   return (
     <MUIBreadcrumbs sx={{ color: theme.palette.common.white }}>

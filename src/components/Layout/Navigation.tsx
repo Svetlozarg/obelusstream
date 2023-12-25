@@ -19,17 +19,17 @@ export interface PageProps {
   link: string;
 }
 
+export const pages: PageProps[] = [
+  { name: "Home", link: "/" },
+  { name: "Movies", link: "/explore/movies" },
+  { name: "Series", link: "/explore/series" },
+];
+
 const Navigation = () => {
   const theme = useTheme();
   const [tabValue, setTabValue] = useState(0);
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
   const pageRouter = useRouter();
-
-  const pages: PageProps[] = [
-    { name: "Home", link: "/" },
-    { name: "Movies", link: "/explore/movies" },
-    { name: "Series", link: "/explore/series" },
-  ];
 
   useEffect(() => {
     const currentPath =
@@ -91,7 +91,7 @@ const Navigation = () => {
         </Box>
         {isMatch ? (
           <>
-            <Drawer pages={pages} />
+            <Drawer />
           </>
         ) : (
           <>
