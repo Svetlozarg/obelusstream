@@ -16,7 +16,8 @@ const HTMLTooltip: React.FC<HTMLTooltipProps> = ({ children }) => {
 
   const handleIconClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setOpenTooltipValue(true);
+    setOpenTooltipValue(!openTooltip);
+    setOpenHoverTooltipValue(false);
   };
 
   const handleTooltipClose = () => {

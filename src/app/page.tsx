@@ -76,7 +76,7 @@ export default function Home() {
           Enjoy watching your favourite movies and tv shows
         </Typography>
 
-        <Search big />
+        <Search />
       </Stack>
 
       <SmallMovieList

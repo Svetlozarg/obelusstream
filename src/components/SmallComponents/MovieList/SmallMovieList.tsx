@@ -39,6 +39,7 @@ export const SmallMovieList: React.FC<SmallMovieListProps> = ({
           gridTemplateColumns: "repeat(auto-fit, minmax(160px, max-content))",
           gap: 2,
           mt: 2,
+          justifyContent: "center",
         }}
       >
         {moviesData ? (
