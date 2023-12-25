@@ -27,7 +27,7 @@ import { useEffect, useState } from "react";
 
 const MoviePage = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true); // Set initial loading state to true
   const [movieId, setMovieId] = useState<string>();
   const [movieData, setMovieData] = useState<Movie>();
   const [movieRecommendations, setMovieRecommendations] = useState<Movie[]>();
@@ -36,12 +36,18 @@ const MoviePage = () => {
   const [movieKeywords, setMovieKeywords] = useState<KeyWord[]>([]);
 
   useEffect(() => {
+    const delay = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id");
 
     if (id) {
       setMovieId(id);
     }
+
+    return () => clearTimeout(delay);
   }, []);
 
   useEffect(() => {
@@ -89,7 +95,11 @@ const MoviePage = () => {
     })();
   }, [movieId, router]);
 
-  if (!movieData) return;
+  if (loading) {
+    return <div style={{ height: "100vh" }}></div>;
+  }
+
+  if (!movieData) return null;
 
   return (
     <Container>

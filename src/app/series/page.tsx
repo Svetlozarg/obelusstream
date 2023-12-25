@@ -43,9 +43,13 @@ const SeriesPage = () => {
   const [castData, setCastData] = useState<Member[]>([]);
   const [seriesSeason, setseriesSeason] = useState<Episode[]>([]);
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true); // Set initial loading state to true
 
   useEffect(() => {
+    const delay = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+
     const searchParams = new URLSearchParams(location.search);
     const id = searchParams.get("id")?.split("?")[0];
     const season = searchParams.get("id")?.split("?")[1].split("=")[1];
@@ -54,6 +58,7 @@ const SeriesPage = () => {
     if (id && season && episode) {
       setSeriesParams({ id, season, episode });
     }
+    return () => clearTimeout(delay);
   }, []);
 
   useEffect(() => {
@@ -89,7 +94,6 @@ const SeriesPage = () => {
           });
           setseriesSeason(seriesSeasonData.episodes);
         }
-        setLoading(false);
       } catch (err) {
         console.log(err);
         router.push("/");
@@ -97,7 +101,11 @@ const SeriesPage = () => {
     })();
   }, [seriesParams, router]);
 
-  if (!seriesData) return;
+  if (loading) {
+    return <div style={{ height: "100vh" }}></div>;
+  }
+
+  if (!seriesData) return null;
 
   return (
     <Container>
