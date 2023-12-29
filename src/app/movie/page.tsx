@@ -83,7 +83,6 @@ const MoviePage = () => {
           const movieKeywords = await callApi<KeyWordsResult>({
             query: getMovieKeywords(+movieId),
           });
-          console.log(movieKeywords);
 
           setMovieKeywords(movieKeywords.keywords);
         }
