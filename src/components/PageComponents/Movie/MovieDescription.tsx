@@ -1,8 +1,8 @@
 "use client";
 import { KeyWord, Movie } from "@/services/apiTypes";
-import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
-import VideocamIcon from "@mui/icons-material/Videocam";
+import TrailerModal from "@/components/SmallComponents/Trailer/TrailerModal";
 
 interface MovieDescriptionProps {
   movieData: Movie;
@@ -50,18 +50,7 @@ const MovieDescription: React.FC<MovieDescriptionProps> = ({
         </Typography>
 
         {!movieTrailer.includes("undefined") && (
-          <Button
-            sx={{ width: "8rem" }}
-            variant="contained"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.open(movieTrailer, "_blank");
-              }
-            }}
-          >
-            <VideocamIcon />
-            Trailer
-          </Button>
+          <TrailerModal trailerURL={movieTrailer} />
         )}
 
         <Typography component="p" variant="body1" mt={4}>

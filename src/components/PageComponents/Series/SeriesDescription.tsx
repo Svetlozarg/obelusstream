@@ -1,8 +1,8 @@
 "use client";
 import { Series } from "@/services/apiTypes";
-import { Button, Stack, Typography, useTheme } from "@mui/material";
+import { Stack, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
-import VideocamIcon from "@mui/icons-material/Videocam";
+import TrailerModal from "@/components/SmallComponents/Trailer/TrailerModal";
 
 interface SeriesDescriptionProps {
   seriesData: Series;
@@ -47,20 +47,7 @@ const SeriesDescription: React.FC<SeriesDescriptionProps> = ({
           IMDb: {seriesData.vote_average.toFixed(1)}
         </Typography>
 
-        {!seriesTrailer.includes("undefined") && (
-          <Button
-            sx={{ width: "8rem" }}
-            variant="contained"
-            onClick={() => {
-              if (typeof window !== "undefined") {
-                window.open(seriesTrailer, "_blank");
-              }
-            }}
-          >
-            <VideocamIcon />
-            Trailer
-          </Button>
-        )}
+        <TrailerModal trailerURL={seriesTrailer} />
 
         <Typography component="p" variant="body1" mt={4}>
           {seriesData.overview}
