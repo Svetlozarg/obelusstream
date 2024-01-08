@@ -29,6 +29,7 @@ const SearchList: React.FC<SearchListProps> = ({ query, setQuery, big }) => {
         const searchData = await callApi<SearchResult>({
           query: getMultiSearch(query),
         });
+
         setSearchData(searchData.results);
       } catch (err) {
         console.log(err);

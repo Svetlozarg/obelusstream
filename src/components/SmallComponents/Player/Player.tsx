@@ -43,6 +43,7 @@ const Player: React.FC<PlayerProps> = ({ movieId, series }) => {
           }
           style={styles.player}
           referrerPolicy="origin"
+          allowFullScreen
         ></iframe>
       )}
     </Box>
